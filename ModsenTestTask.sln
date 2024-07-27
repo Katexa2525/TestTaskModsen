@@ -5,6 +5,10 @@ VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModsenTestTask", "ModsenTestTask\ModsenTestTask.csproj", "{A41F74D7-7BE4-418E-8C36-82B119F20380}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{5694A7F6-8634-46C9-9D30-029B857EA31B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{5853568B-DCC4-4A72-BCD1-BD1786CDB56E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{A41F74D7-7BE4-418E-8C36-82B119F20380}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A41F74D7-7BE4-418E-8C36-82B119F20380}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A41F74D7-7BE4-418E-8C36-82B119F20380}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5694A7F6-8634-46C9-9D30-029B857EA31B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5694A7F6-8634-46C9-9D30-029B857EA31B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5694A7F6-8634-46C9-9D30-029B857EA31B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5694A7F6-8634-46C9-9D30-029B857EA31B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5853568B-DCC4-4A72-BCD1-BD1786CDB56E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5853568B-DCC4-4A72-BCD1-BD1786CDB56E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5853568B-DCC4-4A72-BCD1-BD1786CDB56E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5853568B-DCC4-4A72-BCD1-BD1786CDB56E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
