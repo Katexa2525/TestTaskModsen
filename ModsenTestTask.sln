@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModsenTestTask", "ModsenTestTask\ModsenTestTask.csproj", "{A41F74D7-7BE4-418E-8C36-82B119F20380}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModsenTestTask", "ModsenTestTask\ModsenTestTask.csproj", "{A41F74D7-7BE4-418E-8C36-82B119F20380}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{5694A7F6-8634-46C9-9D30-029B857EA31B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{5694A7F6-8634-46C9-9D30-029B857EA31B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{5853568B-DCC4-4A72-BCD1-BD1786CDB56E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "DataAccess\Entities.csproj", "{5853568B-DCC4-4A72-BCD1-BD1786CDB56E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
