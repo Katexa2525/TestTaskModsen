@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using ModsenTestTask.Extensions;
 using NLog;
+using System.Reflection;
 
 string? pathDirectoryName =Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
 _ = LogManager.Setup().LoadConfigurationFromFile(string.Concat(pathDirectoryName, "/Nlog.config"));
@@ -12,10 +13,16 @@ logger.Info("Запуск программы");
 try
 {
   var builder = WebApplication.CreateBuilder(args);
+  builder.Configuration.AddJsonFile(pathDirectoryName + "//appsettings.json", optional: false, reloadOnChange: true);
 
   // Add services to the container.
 
   builder.Services.ConfigureCors();
+  builder.Services.ConfigureLoggerService();
+  builder.Services.ConfigureSqlContext(builder.Configuration);
+  builder.Services.ConfigureRepositoryManager();
+  builder.Services.AddAutoMapper(Assembly.GetEntryAssembly());
+
   builder.Services.AddControllers();
   // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
   builder.Services.AddEndpointsApiExplorer();

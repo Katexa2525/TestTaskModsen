@@ -1,4 +1,12 @@
-﻿namespace ModsenTestTask.Extensions
+﻿using Contracts;
+using Entities;
+using LoggerService;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
+using Repository;
+
+namespace ModsenTestTask.Extensions
 {
   public static class ServiceExtensions
   {
@@ -10,5 +18,17 @@
       .AllowAnyMethod()
       .AllowAnyHeader());
     });
+
+    public static void ConfigureLoggerService(this IServiceCollection services) =>
+                            services.AddScoped<ILoggerManager, LoggerManager>();
+
+    public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration) =>
+    services.AddDbContext<RepositoryContext>(opts =>
+    opts.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+
+    public static void ConfigureRepositoryManager(this IServiceCollection services) =>
+      services.AddScoped<IRepositoryManager, RepositoryManager>();
+
+
   }
 }
