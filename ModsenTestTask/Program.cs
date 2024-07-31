@@ -1,3 +1,4 @@
+using Contracts;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
@@ -29,7 +30,8 @@ try
   builder.Services.AddSwaggerGen();
 
   var app = builder.Build();
-
+  var _logger = app.Services.GetRequiredService<ILoggerManager>();
+  app.ConfigureExceptionHandler(_logger);
   // Configure the HTTP request pipeline.
   if (app.Environment.IsDevelopment())
   {
@@ -44,16 +46,16 @@ try
 
   app.UseHttpsRedirection();
 
-  app.UseStaticFiles();
-
-  app.UseCors("CorsPolicy");
+  //app.UseStaticFiles();
 
   app.UseForwardedHeaders(new ForwardedHeadersOptions
   {
     ForwardedHeaders = ForwardedHeaders.All
   });
 
-  app.UseRouting();
+  app.UseCors("CorsPolicy");
+
+  //app.UseRouting();
 
   app.UseAuthorization();
 

@@ -14,5 +14,9 @@ namespace Repository
     public BookRepository(RepositoryContext repositoryContext) : base(repositoryContext)
     {
     }
+
+    public IEnumerable<Book> GetAllBooks(bool trackChanges) => FindAll(trackChanges).OrderBy(c => c.Name).ToList();
+
+    public IEnumerable<Book> GetBookByAuthor(Guid authorId, bool trackChanges) => FindByCondition(c => c.IdAuthor.Equals(authorId), trackChanges).OrderBy(c => c.Name);
   }
 }

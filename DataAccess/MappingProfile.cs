@@ -9,6 +9,7 @@ namespace Entities
     public MappingProfile() 
     {
       CreateMap<Author, AuthorDTO>();
+      CreateMap<Book, BookDTO>();
     }
   }
 }

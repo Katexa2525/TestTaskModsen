@@ -20,7 +20,7 @@ namespace ModsenTestTask.Extensions
     });
 
     public static void ConfigureLoggerService(this IServiceCollection services) =>
-                            services.AddScoped<ILoggerManager, LoggerManager>();
+                            services.AddSingleton<ILoggerManager, LoggerManager>();
 
     public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration) =>
     services.AddDbContext<RepositoryContext>(opts =>

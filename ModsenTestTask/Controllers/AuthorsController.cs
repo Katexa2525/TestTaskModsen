@@ -24,16 +24,24 @@ namespace ModsenTestTask.Controllers
     [HttpGet]
     public IActionResult GetAuthors() 
     {
-      try 
+      var authors = _repository.Author.GetAllAuthors(trackChanges:false);
+      var authorsDTO = _mapper.Map<IEnumerable<AuthorDTO>>(authors);
+      return Ok(authorsDTO);
+    }
+
+    [HttpGet("{id}")]
+    public IActionResult GetAuthorById(Guid id) 
+    {
+      var author = _repository.Author.GetAuthorById(id, trackChanges: false);
+      if (author == null) 
       {
-        var authors = _repository.Author.GetAllAuthors(trackChanges:false);
-        var authorsDTO = _mapper.Map<IEnumerable<AuthorDTO>>(authors);
-        return Ok(authorsDTO);
+        _logger.LogInfo($"Author with id: {id} doesn't exist in the database.");
+        return NotFound();
       }
-      catch (Exception ex) 
+      else 
       {
-        _logger.LogError($"Something went wrong in the {nameof(GetAuthors)} action {ex}");
-        return StatusCode(500, "Internal server error");
+        var authorDTO = _mapper.Map<AuthorDTO>(author);
+        return Ok(authorDTO);
       }
     }
   }
