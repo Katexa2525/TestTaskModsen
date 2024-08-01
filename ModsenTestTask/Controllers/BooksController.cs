@@ -44,5 +44,24 @@ namespace ModsenTestTask.Controllers
       var booksDto = _mapper.Map<IEnumerable<BookDTO>>(booksFromDB);
       return Ok(booksDto);
     }
+
+    [HttpGet("{id}")]
+    public ActionResult GetBookById(Guid authorId,Guid id) 
+    {
+      var author = _repository.Author.GetAuthorById(authorId, trackChanges: false);
+      if (author == null)
+      {
+        _logger.LogInfo($"Author with id: {authorId} doesn't exist in the database.");
+        return NotFound();
+      }
+      var bookDb = _repository.Book.GetBookById(authorId, id, trackChanges: false);
+      if (bookDb == null)
+      {
+        _logger.LogInfo($"Book with id: {id} doesn't exist in the database.");
+        return NotFound();
+      }
+      var book = _mapper.Map<BookDTO>(bookDb);
+      return Ok(book);
+    }
   }
 }

@@ -11,5 +11,6 @@ namespace Contracts
   {
     IEnumerable<Book> GetAllBooks(bool trackChanges);
     IEnumerable<Book> GetBookByAuthor(Guid authorId, bool trackChanges);
+    Book GetBookById(Guid authorId, Guid id, bool trackChanges);
   }
 }
