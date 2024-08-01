@@ -24,7 +24,7 @@ namespace ModsenTestTask.Controllers
     }
 
     [HttpGet]
-    public ActionResult GetAllBooks() 
+    public ActionResult GetAllBooks()
     {
       var books = _repository.Book.GetAllBooks(trackChanges: false);
       var booksDTO = _mapper.Map<IEnumerable<BookDTO>>(books);
@@ -32,7 +32,7 @@ namespace ModsenTestTask.Controllers
     }
 
     [HttpGet]
-    public ActionResult GetBooksByAuthor(Guid authorId) 
+    public ActionResult GetBooksByAuthor(Guid authorId)
     {
       var author = _repository.Author.GetAuthorById(authorId, trackChanges: false);
       if (author == null)
@@ -46,7 +46,7 @@ namespace ModsenTestTask.Controllers
     }
 
     [HttpGet("{id}")]
-    public ActionResult GetBookById(Guid authorId,Guid id) 
+    public ActionResult GetBookById(Guid authorId, Guid id)
     {
       var author = _repository.Author.GetAuthorById(authorId, trackChanges: false);
       if (author == null)
@@ -63,5 +63,26 @@ namespace ModsenTestTask.Controllers
       var book = _mapper.Map<BookDTO>(bookDb);
       return Ok(book);
     }
+
+    [HttpDelete("{id}")]
+    public IActionResult DeleteBook(Guid authorId, Guid id)
+    {
+      var author = _repository.Author.GetAuthorById(authorId, trackChanges: false);
+      if (author == null)
+      {
+        _logger.LogInfo($"Author with id: {authorId} doesn't exist in the database.");
+        return NotFound();
+      }
+      var book = _repository.Book.GetBookById(authorId, id, trackChanges: false);
+      if (book == null)
+      {
+        _logger.LogInfo($"Book with id: {id} doesn't exist in the database.");
+        return NotFound();
+      }
+      _repository.Book.DeleteBook(book);
+      _repository.Save();
+      return NoContent();
+    }
+
   }
 }
