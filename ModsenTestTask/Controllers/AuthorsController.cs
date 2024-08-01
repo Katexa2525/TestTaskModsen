@@ -44,5 +44,19 @@ namespace ModsenTestTask.Controllers
         return Ok(authorDTO);
       }
     }
+
+    [HttpDelete("{id}")]
+    public IActionResult DeleteAuthor(Guid id)
+    {
+      var author = _repository.Author.GetAuthorById(id, trackChanges: false);
+      if (author == null)
+      {
+        _logger.LogInfo($"Author with id: {id} doesn't exist in the database.");
+        return NotFound();
+      }
+      _repository.Author.DeleteAuthor(author);
+      _repository.Save();
+      return NoContent();
+    }
   }
 }
