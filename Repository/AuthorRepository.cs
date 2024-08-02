@@ -15,6 +15,11 @@ namespace Repository
     {
     }
 
+    public void CreateAuthor(Author author)
+    {
+      Create(author);
+    }
+
     public void DeleteAuthor(Author author)
     {
       Delete(author);

@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Repository;
+using Contracts.Services;
+using Service;
 
 namespace ModsenTestTask.Extensions
 {
@@ -29,6 +31,7 @@ namespace ModsenTestTask.Extensions
     public static void ConfigureRepositoryManager(this IServiceCollection services) =>
       services.AddScoped<IRepositoryManager, RepositoryManager>();
 
-
+    public static void ConfigureServiceManager(this IServiceCollection services) =>
+      services.AddScoped<IServiceManager, ServiceManager>();
   }
 }
