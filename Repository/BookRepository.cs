@@ -15,6 +15,12 @@ namespace Repository
     {
     }
 
+    public void CreateBook(Guid authorId, Book book)
+    {
+      book.IdAuthor = authorId;
+      Create(book);
+    }
+
     public void DeleteBook(Book book)
     {
       Delete(book);

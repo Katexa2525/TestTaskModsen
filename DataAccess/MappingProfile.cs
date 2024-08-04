@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Entities.DTO;
 using Entities.Models;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Entities
 {
@@ -10,6 +11,9 @@ namespace Entities
     {
       CreateMap<Author, AuthorDTO>();
       CreateMap<Book, BookDTO>();
+      CreateMap<CreateAuthorDTO, Author>();
+      CreateMap<UpdateAuthorDTO, Author>();
+      CreateMap<CreateUpdateBookDTO, Book>();
     }
   }
 }

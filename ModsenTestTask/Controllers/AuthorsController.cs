@@ -34,34 +34,29 @@ namespace ModsenTestTask.Controllers
       return Ok(author);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:guid}")]
     public IActionResult DeleteAuthor(Guid id)
     {
-      var author = _repository.Author.GetAuthorById(id, trackChanges: false);
-      if (author == null)
-      {
-        _logger.LogInfo($"Author with id: {id} doesn't exist in the database.");
-        return NotFound();
-      }
-      _repository.Author.DeleteAuthor(author);
-      _repository.Save();
+      _service.AuthorService.DeleteAuthor(id, trackChanges: false);
       return NoContent();
     }
 
-    // izmenit
     [HttpPost]
-    public IActionResult CreateCompany([FromBody] AuthorDTO author)
+    public IActionResult CreateAuthor([FromBody] CreateAuthorDTO author)
     {
-      if (author == null)
-      {
-        _logger.LogError("AuthorDTO object sent from client is null.");
-        return BadRequest("AuthorDTO object is null");
-      }
-      var authorEntity = _mapper.Map<Author>(author);
-      _repository.Author.CreateAuthor(authorEntity);
-      _repository.Save();
-      var AuthorToReturn = _mapper.Map<AuthorDTO>(authorEntity);
-      return CreatedAtRoute("AuthorById", new { id = AuthorToReturn.Id }, AuthorToReturn);
+      if (author is null)
+        return BadRequest("CreateAuthorDTO object is null");
+      var createdAuthor = _service.AuthorService.CreateAuthor(author);
+      return CreatedAtRoute("AuthorById", new { id = createdAuthor.Id },createdAuthor);
+    }
+
+    [HttpPut("{id:guid}")]
+    public IActionResult UpdateAuthor(Guid id, [FromBody] UpdateAuthorDTO author)
+    {
+      if (author is null)
+        return BadRequest("UpdateAuthorDTO object is null");
+      _service.AuthorService.UpdateAuthor(id, author, trackChanges: true);
+      return NoContent();
     }
   }
 }

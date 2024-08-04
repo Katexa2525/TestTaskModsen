@@ -13,5 +13,9 @@ namespace Contracts.Services
   {
     IEnumerable<AuthorDTO> GetAllAuthors(bool trackChanges);
     AuthorDTO GetAuthor(Guid id, bool trackChanges);
+    void DeleteAuthor(Guid id, bool trackChanges);
+    AuthorDTO CreateAuthor(CreateAuthorDTO author);
+    void UpdateAuthor(Guid authorId, UpdateAuthorDTO UpdateAuthor, bool trackChanges);
+
   }
 }

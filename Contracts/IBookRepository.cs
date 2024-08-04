@@ -13,5 +13,6 @@ namespace Contracts
     IEnumerable<Book> GetBookByAuthor(Guid authorId, bool trackChanges);
     Book GetBookById(Guid authorId, Guid id, bool trackChanges);
     void DeleteBook(Book book);
+    void CreateBook(Guid authorId, Book book);
   }
 }
