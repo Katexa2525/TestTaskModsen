@@ -9,9 +9,9 @@ namespace Contracts
 {
   public interface IBookRepository
   {
-    IEnumerable<Book> GetAllBooks(bool trackChanges);
-    IEnumerable<Book> GetBookByAuthor(Guid authorId, bool trackChanges);
-    Book GetBookById(Guid authorId, Guid id, bool trackChanges);
+    Task<IEnumerable<Book>> GetAllBooksAsync(bool trackChanges);
+    Task<IEnumerable<Book>> GetBookByAuthorAsync(Guid authorId, bool trackChanges);
+    Task<Book> GetBookByIdAsync(Guid authorId, Guid id, bool trackChanges);
     void DeleteBook(Book book);
     void CreateBook(Guid authorId, Book book);
   }

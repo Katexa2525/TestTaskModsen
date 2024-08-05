@@ -26,66 +26,66 @@ namespace Service
       _maper = maper;
     }
 
-    public BookDTO CreateBook(Guid authorId, CreateUpdateBookDTO createBook, bool trackChanges)
+    public async Task<BookDTO> CreateBookAsync(Guid authorId, CreateUpdateBookDTO createBook, bool trackChanges)
     {
-      var author = _repository.Author.GetAuthorById(authorId, trackChanges);
+      var author = await _repository.Author.GetAuthorByIdAsync(authorId, trackChanges);
       if (author is null)
         throw new AuthorNotFoundException(authorId);
       var bookEntity = _maper.Map<Book>(createBook);
       _repository.Book.CreateBook(authorId, bookEntity);
-      _repository.Save();
+      await _repository.SaveAsync();
       var bookToReturn = _maper.Map<BookDTO>(bookEntity);
       return bookToReturn;
     }
 
-    public void DeleteBook(Guid authorId,Guid id, bool trackChanges)
+    public async Task DeleteBookAsync(Guid authorId,Guid id, bool trackChanges)
     {
-      var bookById = _repository.Book.GetBookById(authorId,id, trackChanges);
+      var bookById = await _repository.Book.GetBookByIdAsync(authorId,id, trackChanges);
       if (bookById is null)
         throw new BookNotFoundException(id);
       _repository.Book.DeleteBook(bookById);
-      _repository.Save();
+      await _repository.SaveAsync();
     }
 
-    public IEnumerable<BookDTO> GetAllBooks(bool trackChanges)
+    public async Task<IEnumerable<BookDTO>> GetAllBooksAsync(bool trackChanges)
     {
-      var books = _repository.Book.GetAllBooks(trackChanges: false);
+      var books = await _repository.Book.GetAllBooksAsync(trackChanges: false);
       var booksDTO = _maper.Map<IEnumerable<BookDTO>>(books);
       return booksDTO;
     }
 
-    public IEnumerable<BookDTO> GetBookByAuthor(Guid authorId, bool trackChanges)
+    public async Task<IEnumerable<BookDTO>> GetBookByAuthorAsync(Guid authorId, bool trackChanges)
     {
-      var author = _repository.Author.GetAuthorById(authorId, trackChanges: false);
+      var author = await _repository.Author.GetAuthorByIdAsync(authorId, trackChanges: false);
       if (author == null)
         throw new AuthorNotFoundException(authorId);
-      var booksFromDB = _repository.Book.GetBookByAuthor(authorId, trackChanges: false);
+      var booksFromDB = await _repository.Book.GetBookByAuthorAsync(authorId, trackChanges: false);
       var booksDto = _maper.Map<IEnumerable<BookDTO>>(booksFromDB);
       return booksDto;
     }
 
-    public BookDTO GetBookById(Guid authorId, Guid id, bool trackChanges)
+    public async Task<BookDTO> GetBookByIdAsync(Guid authorId, Guid id, bool trackChanges)
     {
-      var author = _repository.Author.GetAuthorById(authorId, trackChanges: false);
+      var author = await _repository.Author.GetAuthorByIdAsync(authorId, trackChanges: false);
       if (author == null)
         throw new AuthorNotFoundException(authorId);
-      var bookDb = _repository.Book.GetBookById(authorId, id, trackChanges: false);
+      var bookDb = await _repository.Book.GetBookByIdAsync(authorId, id, trackChanges: false);
       if (bookDb is null)
         throw new BookNotFoundException(id);
       var book = _maper.Map<BookDTO>(bookDb);
       return book;
     }
 
-    public void UpdateBook(Guid authorId, Guid id, CreateUpdateBookDTO bookUpdate, bool authTrackChanges, bool bookTrackChanges)
+    public async Task UpdateBookAsync(Guid authorId, Guid id, CreateUpdateBookDTO bookUpdate, bool authTrackChanges, bool bookTrackChanges)
     {
-      var author = _repository.Author.GetAuthorById(authorId, authTrackChanges);
+      var author = await _repository.Author.GetAuthorByIdAsync(authorId, authTrackChanges);
       if (author is null)
         throw new AuthorNotFoundException(authorId);
-      var bookEntity = _repository.Book.GetBookById(authorId, id, bookTrackChanges);
+      var bookEntity = await _repository.Book.GetBookByIdAsync(authorId, id, bookTrackChanges);
       if (bookEntity is null)
         throw new BookNotFoundException(id);
       _maper.Map(bookUpdate, bookEntity);
-      _repository.Save();
+      await _repository.SaveAsync();
     }
   }
 }
