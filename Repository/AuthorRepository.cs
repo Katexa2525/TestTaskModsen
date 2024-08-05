@@ -1,6 +1,7 @@
 ﻿using Contracts;
 using Entities;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,8 +26,8 @@ namespace Repository
       Delete(author);
     }
 
-    public IEnumerable<Author> GetAllAuthors(bool trackChanges) => FindAll(trackChanges).OrderBy(c => c.Name).ToList();
+    public async Task<IEnumerable<Author>> GetAllAuthorsAsync(bool trackChanges) => await FindAll(trackChanges).OrderBy(c => c.Name).ToListAsync();
 
-    public Author GetAuthorById(Guid authorId, bool trackChanges) => FindByCondition(c => c.Id.Equals(authorId), trackChanges).SingleOrDefault();
+    public async Task<Author> GetAuthorByIdAsync(Guid authorId, bool trackChanges) => await FindByCondition(c => c.Id.Equals(authorId), trackChanges).SingleOrDefaultAsync();
   }
 }

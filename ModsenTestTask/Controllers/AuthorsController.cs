@@ -22,42 +22,42 @@ namespace ModsenTestTask.Controllers
     }
 
     [HttpGet]
-    [Authorize]
-    public IActionResult GetAuthors() 
+    [Authorize(Roles = "Manager")]
+    public async Task<IActionResult> GetAuthors() 
     {
-      var authors = _service.AuthorService.GetAllAuthors(trackChanges:false);
+      var authors = await _service.AuthorService.GetAllAuthorsAsync(trackChanges:false);
       return Ok(authors);
     }
 
     [HttpGet("{id: guid}", Name = "GetAuthorById")]
-    public IActionResult GetAuthorById(Guid id) 
+    public async Task<IActionResult> GetAuthorById(Guid id) 
     {
-      var author = _service.AuthorService.GetAuthor(id, trackChanges: false);
+      var author = await _service.AuthorService.GetAuthorAsync(id, trackChanges: false);
       return Ok(author);
     }
 
     [HttpDelete("{id:guid}")]
-    public IActionResult DeleteAuthor(Guid id)
+    public async Task<IActionResult> DeleteAuthor(Guid id)
     {
-      _service.AuthorService.DeleteAuthor(id, trackChanges: false);
+      await _service.AuthorService.DeleteAuthorAsync(id, trackChanges: false);
       return NoContent();
     }
 
     [HttpPost]
-    public IActionResult CreateAuthor([FromBody] CreateAuthorDTO author)
+    public async Task<IActionResult> CreateAuthor([FromBody] CreateAuthorDTO author)
     {
       if (author is null)
         return BadRequest("CreateAuthorDTO object is null");
-      var createdAuthor = _service.AuthorService.CreateAuthor(author);
+      var createdAuthor = await _service.AuthorService.CreateAuthorAsync(author);
       return CreatedAtRoute("AuthorById", new { id = createdAuthor.Id },createdAuthor);
     }
 
     [HttpPut("{id:guid}")]
-    public IActionResult UpdateAuthor(Guid id, [FromBody] UpdateAuthorDTO author)
+    public async Task<IActionResult> UpdateAuthor(Guid id, [FromBody] UpdateAuthorDTO author)
     {
       if (author is null)
         return BadRequest("UpdateAuthorDTO object is null");
-      _service.AuthorService.UpdateAuthor(id, author, trackChanges: true);
+      await _service.AuthorService.UpdateAuthorAsync(id, author, trackChanges: true);
       return NoContent();
     }
   }

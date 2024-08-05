@@ -17,7 +17,7 @@ namespace ModsenTestTask.Controllers
     }
 
     [HttpGet]
-    [Authorize]
+    [Authorize(Roles = "Manager")]
     public ActionResult GetAllBooks()
     {
       var book = _service.BookService.GetAllBooks(trackChanges: false);

@@ -11,11 +11,11 @@ namespace Contracts.Services
 {
   public interface IAuthorService
   {
-    IEnumerable<AuthorDTO> GetAllAuthors(bool trackChanges);
-    AuthorDTO GetAuthor(Guid id, bool trackChanges);
-    void DeleteAuthor(Guid id, bool trackChanges);
-    AuthorDTO CreateAuthor(CreateAuthorDTO author);
-    void UpdateAuthor(Guid authorId, UpdateAuthorDTO UpdateAuthor, bool trackChanges);
+    Task<IEnumerable<AuthorDTO>> GetAllAuthorsAsync(bool trackChanges);
+    Task<AuthorDTO> GetAuthorAsync(Guid id, bool trackChanges);
+    Task DeleteAuthorAsync(Guid id, bool trackChanges);
+    Task<AuthorDTO> CreateAuthorAsync(CreateAuthorDTO author);
+    Task UpdateAuthorAsync(Guid authorId, UpdateAuthorDTO UpdateAuthor, bool trackChanges);
 
   }
 }
