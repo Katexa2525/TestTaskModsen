@@ -12,11 +12,10 @@ namespace ModsenTestTask.Controllers
     public AuthenticationController(IServiceManager service) => _service = service;
 
     [HttpPost]
-    [ServiceFilter(typeof(ValidationFilterAttribute))]
+    //[ServiceFilter(typeof(ValidationFilterAttribute))]
     public async Task<IActionResult> RegisterUser([FromBody] UserForRegistrationDTO userForRegistration)
     {
-      var result = await
-      _service.AuthenticationService.RegisterUser(userForRegistration);
+      var result = await _service.AuthenticationService.RegisterUser(userForRegistration);
       if (!result.Succeeded)
       {
         foreach (var error in result.Errors)
@@ -29,7 +28,7 @@ namespace ModsenTestTask.Controllers
     }
 
     [HttpPost("login")]
-    [ServiceFilter(typeof(ValidationFilterAttribute))]
+    //[ServiceFilter(typeof(ValidationFilterAttribute))]
     public async Task<IActionResult> Authenticate([FromBody] UserForAuthenticationDTO user)
     {
       if (!await _service.AuthenticationService.ValidateUser(user))
