@@ -3,6 +3,7 @@ using Contracts;
 using Contracts.Services;
 using Entities.DTO;
 using Entities.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
@@ -21,6 +22,7 @@ namespace ModsenTestTask.Controllers
     }
 
     [HttpGet]
+    [Authorize]
     public IActionResult GetAuthors() 
     {
       var authors = _service.AuthorService.GetAllAuthors(trackChanges:false);

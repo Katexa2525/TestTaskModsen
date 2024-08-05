@@ -6,6 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using Entities.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 
 namespace Service
 {
@@ -13,12 +16,16 @@ namespace Service
   {
     private readonly Lazy<IAuthorService> _authorService;
     private readonly Lazy<IBookService> _bookService;
-    public ServiceManager(IRepositoryManager repositoryManager, ILoggerManager logger, IMapper mapper)
+    private readonly Lazy<IAuthenticationService> _authenticationService;
+    public ServiceManager(IRepositoryManager repositoryManager, ILoggerManager logger, IMapper mapper, UserManager<User> userManager,
+    IConfiguration configuration)
     {
       _authorService = new Lazy<IAuthorService>(() => new AuthorService(repositoryManager, logger, mapper));
       _bookService = new Lazy<IBookService>(() => new BookService(repositoryManager, logger, mapper));
+      _authenticationService = new Lazy<IAuthenticationService>(() => new AuthenticationService(logger, mapper, userManager, configuration));
     }
     public IAuthorService AuthorService => _authorService.Value;
     public IBookService BookService => _bookService.Value;
+    public IAuthenticationService AuthenticationService => _authenticationService.Value;
   }
 }

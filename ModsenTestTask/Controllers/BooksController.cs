@@ -1,5 +1,6 @@
 ﻿using Contracts.Services;
 using Entities.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ModsenTestTask.Controllers
@@ -16,6 +17,7 @@ namespace ModsenTestTask.Controllers
     }
 
     [HttpGet]
+    [Authorize]
     public ActionResult GetAllBooks()
     {
       var book = _service.BookService.GetAllBooks(trackChanges: false);

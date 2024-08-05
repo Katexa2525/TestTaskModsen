@@ -24,6 +24,9 @@ try
   builder.Services.ConfigureRepositoryManager();
   builder.Services.AddAutoMapper(Assembly.GetEntryAssembly());
   builder.Services.ConfigureServiceManager();
+  builder.Services.AddAuthentication();
+  builder.Services.ConfigureIdentity();
+  builder.Services.ConfigureJWT(builder.Configuration);
 
   builder.Services.AddControllers();
   // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -57,6 +60,8 @@ try
   app.UseCors("CorsPolicy");
 
   //app.UseRouting();
+
+  app.UseAuthentication();
 
   app.UseAuthorization();
 

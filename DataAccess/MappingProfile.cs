@@ -14,6 +14,7 @@ namespace Entities
       CreateMap<CreateAuthorDTO, Author>();
       CreateMap<UpdateAuthorDTO, Author>();
       CreateMap<CreateUpdateBookDTO, Book>();
+      CreateMap<UserForRegistrationDTO, User>();
     }
   }
 }
