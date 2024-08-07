@@ -2,6 +2,7 @@
 using Entities;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
+using Repository.Extensions;
 using Shared.RequestFeatures;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ namespace Repository
 
     public async Task<PagedList<Book>> GetAllBooksAsync(BookParameters bookParameters, bool trackChanges)
     {
-      var books = await FindAll(trackChanges).Skip((bookParameters.PageNumber - 1) * bookParameters.PageSize).Take(bookParameters.PageSize).ToListAsync();
+      var books = await FindAll(trackChanges).Skip((bookParameters.PageNumber - 1) * bookParameters.PageSize).Take(bookParameters.PageSize).Search(bookParameters.SearchTerm).ToListAsync();
       return PagedList<Book>.ToPagedList(books, bookParameters.PageNumber, bookParameters.PageSize);
     }
     public async Task<IEnumerable<Book>> GetBookByAuthorAsync(Guid authorId, bool trackChanges) => await FindByCondition(c => c.IdAuthor.Equals(authorId), trackChanges).OrderBy(c => c.Name).ToListAsync();
