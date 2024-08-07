@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repository.Configuration
+namespace Entities.Configuration
 {
   public class RoleConfiguration : IEntityTypeConfiguration<IdentityRole>
   {
@@ -16,8 +16,8 @@ namespace Repository.Configuration
       builder.HasData(
       new IdentityRole
       {
-        Name = "Manager",
-        NormalizedName = "MANAGER"
+        Name = "User",
+        NormalizedName = "USER"
       },
       new IdentityRole
       {

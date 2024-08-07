@@ -12,8 +12,7 @@ namespace ModsenTestTask.ContextFactory
       .SetBasePath(Directory.GetCurrentDirectory())
       .AddJsonFile("appsettings.json")
       .Build();
-      var builder = new DbContextOptionsBuilder<RepositoryContext>().UseNpgsql(configuration.GetConnectionString("DefaultConnection"), 
-      b => b.MigrationsAssembly("bookshop"));
+      var builder = new DbContextOptionsBuilder<RepositoryContext>().UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
       return new RepositoryContext(builder.Options);
     }
   }

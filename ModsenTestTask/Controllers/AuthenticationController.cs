@@ -12,7 +12,6 @@ namespace ModsenTestTask.Controllers
     public AuthenticationController(IServiceManager service) => _service = service;
 
     [HttpPost]
-    //[ServiceFilter(typeof(ValidationFilterAttribute))]
     public async Task<IActionResult> RegisterUser([FromBody] UserForRegistrationDTO userForRegistration)
     {
       var result = await _service.AuthenticationService.RegisterUser(userForRegistration);
@@ -28,7 +27,6 @@ namespace ModsenTestTask.Controllers
     }
 
     [HttpPost("login")]
-    //[ServiceFilter(typeof(ValidationFilterAttribute))]
     public async Task<IActionResult> Authenticate([FromBody] UserForAuthenticationDTO user)
     {
       if (!await _service.AuthenticationService.ValidateUser(user))

@@ -2,6 +2,7 @@
 using Entities;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
+using Shared.RequestFeatures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,9 +28,12 @@ namespace Repository
       Delete(book);
     }
 
-    public async Task<IEnumerable<Book>> GetAllBooksAsync(bool trackChanges) => await FindAll(trackChanges).OrderBy(c => c.Name).ToListAsync();
-
-    public async Task<IEnumerable<Book>> GetBookByAuthorAsync(Guid authorId, bool trackChanges) => FindByCondition(c => c.IdAuthor.Equals(authorId), trackChanges).OrderBy(c => c.Name);
+    public async Task<PagedList<Book>> GetAllBooksAsync(BookParameters bookParameters, bool trackChanges)
+    {
+      var books = await FindAll(trackChanges).Skip((bookParameters.PageNumber - 1) * bookParameters.PageSize).Take(bookParameters.PageSize).ToListAsync();
+      return PagedList<Book>.ToPagedList(books, bookParameters.PageNumber, bookParameters.PageSize);
+    }
+    public async Task<IEnumerable<Book>> GetBookByAuthorAsync(Guid authorId, bool trackChanges) => await FindByCondition(c => c.IdAuthor.Equals(authorId), trackChanges).OrderBy(c => c.Name).ToListAsync();
 
     public async Task<Book> GetBookByIdAsync(Guid authorId, Guid id, bool trackChanges) => await FindByCondition(c => c.IdAuthor.Equals(authorId) && c.Id.Equals(id), trackChanges).SingleOrDefaultAsync();
   }

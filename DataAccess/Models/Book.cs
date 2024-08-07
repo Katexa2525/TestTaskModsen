@@ -23,7 +23,7 @@ namespace Entities.Models
 
     [Required(ErrorMessage = "Book jenre is a required field.")]
     [MaxLength(30, ErrorMessage = "Maximum length for the Jenre is 30 characters.")]
-    public string Jenre { get; set; }
+    public string? Jenre { get; set; }
 
     [Required(ErrorMessage = "Book TakeTime is a required field.")]
     public DateTime TakeTime { get; set; }
@@ -33,8 +33,8 @@ namespace Entities.Models
 
     [ForeignKey(nameof(Author))]
     public Guid IdAuthor { get; set; }
-    public Author Author { get; set; }
+    public Author? Author { get; set; }
 
-    public ICollection<UserBook> UserBooks { get; set; }
+    public ICollection<UserBook>? UserBooks { get; set; }
   }
 }

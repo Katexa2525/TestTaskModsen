@@ -4,6 +4,7 @@ using Contracts.Services;
 using Entities.DTO;
 using Entities.Exceptions;
 using Entities.Models;
+using Shared.RequestFeatures;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
@@ -47,11 +48,11 @@ namespace Service
       await _repository.SaveAsync();
     }
 
-    public async Task<IEnumerable<BookDTO>> GetAllBooksAsync(bool trackChanges)
+    public async Task<(IEnumerable<BookDTO>, MetaData metaData)> GetAllBooksAsync(BookParameters bookParameters, bool trackChanges)
     {
-      var books = await _repository.Book.GetAllBooksAsync(trackChanges: false);
-      var booksDTO = _maper.Map<IEnumerable<BookDTO>>(books);
-      return booksDTO;
+      var booksWithMetaData = await _repository.Book.GetAllBooksAsync(bookParameters, trackChanges);
+      var booksDTO = _maper.Map<IEnumerable<BookDTO>>(booksWithMetaData);
+      return (books: booksDTO, metaData: booksWithMetaData.MetaData);
     }
 
     public async Task<IEnumerable<BookDTO>> GetBookByAuthorAsync(Guid authorId, bool trackChanges)

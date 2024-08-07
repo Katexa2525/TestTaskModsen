@@ -22,7 +22,7 @@ namespace ModsenTestTask.Controllers
     }
 
     [HttpGet]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "User")]
     public async Task<IActionResult> GetAuthors() 
     {
       var authors = await _service.AuthorService.GetAllAuthorsAsync(trackChanges:false);

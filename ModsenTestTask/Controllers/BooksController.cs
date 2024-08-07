@@ -2,6 +2,9 @@
 using Entities.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Shared.RequestFeatures;
+using System.ComponentModel.Design;
+using System.Text.Json;
 
 namespace ModsenTestTask.Controllers
 {
@@ -17,35 +20,36 @@ namespace ModsenTestTask.Controllers
     }
 
     [HttpGet]
-    [Authorize(Roles = "Manager")]
-    public async Task<ActionResult> GetAllBooks()
+    [Authorize(Roles = "User")]
+    public async Task<ActionResult> GetAllBooks([FromQuery] BookParameters bookParameters)
     {
-      var book = await _service.BookService.GetAllBooksAsync(trackChanges: false);
-      return Ok(book);
+      var pagedResult = await _service.BookService.GetAllBooksAsync(bookParameters, trackChanges: false);
+      Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
+      return Ok(pagedResult.books);
     }
 
-    [HttpGet]
+    [HttpGet("{authorId:guid}")]
     public async Task<ActionResult> GetBooksByAuthor(Guid authorId)
     {
       var book = await _service.BookService.GetBookByAuthorAsync(authorId, trackChanges: false);
       return Ok(book);
     }
 
-    [HttpGet("{id:guid}")]
+    [HttpGet("{authorId:guid}/{id:guid}")]
     public async Task<ActionResult> GetBookById(Guid authorId, Guid id)
     {
       var book = await _service.BookService.GetBookByIdAsync(authorId, id, trackChanges: false);
       return Ok(book);
     }
 
-    [HttpDelete("{id:guid}")]
+    [HttpDelete("{authorId:guid}/{id:guid}")]
     public async Task<IActionResult> DeleteBook(Guid authorId, Guid id)
     {
       await _service.BookService.DeleteBookAsync(authorId, id, trackChanges: false);
       return NoContent();
     }
 
-    [HttpPost]
+    [HttpPost("{authorId:guid}")]
     public async Task<IActionResult> CreateBook(Guid authorId, [FromBody]CreateUpdateBookDTO book)
     {
       if (book is null)
@@ -59,7 +63,7 @@ namespace ModsenTestTask.Controllers
       bookToReturn);
     }
 
-    [HttpPut("{id:guid}")]
+    [HttpPut("{authorId:guid}/{id:guid}")]
     public async Task<IActionResult> UpdateBook(Guid authorId, Guid id, [FromBody] CreateUpdateBookDTO book)
     {
       if (book is null)
