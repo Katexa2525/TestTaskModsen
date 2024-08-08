@@ -48,7 +48,7 @@ namespace Service
       await _repository.SaveAsync();
     }
 
-    public async Task<(IEnumerable<BookDTO>, MetaData metaData)> GetAllBooksAsync(BookParameters bookParameters, bool trackChanges)
+    public async Task<(IEnumerable<BookDTO> books, MetaData metaData)> GetAllBooksAsync(BookParameters bookParameters, bool trackChanges)
     {
       var booksWithMetaData = await _repository.Book.GetAllBooksAsync(bookParameters, trackChanges);
       var booksDTO = _maper.Map<IEnumerable<BookDTO>>(booksWithMetaData);

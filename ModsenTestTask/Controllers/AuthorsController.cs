@@ -29,14 +29,14 @@ namespace ModsenTestTask.Controllers
       return Ok(authors);
     }
 
-    [HttpGet("{id: guid}", Name = "GetAuthorById")]
+    [HttpGet("{id:Guid}", Name = "GetAuthorById")]
     public async Task<IActionResult> GetAuthorById(Guid id) 
     {
       var author = await _service.AuthorService.GetAuthorAsync(id, trackChanges: false);
       return Ok(author);
     }
 
-    [HttpDelete("{id:guid}")]
+    [HttpDelete("{id:Guid}")]
     public async Task<IActionResult> DeleteAuthor(Guid id)
     {
       await _service.AuthorService.DeleteAuthorAsync(id, trackChanges: false);
@@ -52,7 +52,7 @@ namespace ModsenTestTask.Controllers
       return CreatedAtRoute("AuthorById", new { id = createdAuthor.Id },createdAuthor);
     }
 
-    [HttpPut("{id:guid}")]
+    [HttpPut("{id:Guid}")]
     public async Task<IActionResult> UpdateAuthor(Guid id, [FromBody] UpdateAuthorDTO author)
     {
       if (author is null)

@@ -28,28 +28,28 @@ namespace ModsenTestTask.Controllers
       return Ok(pagedResult.books);
     }
 
-    [HttpGet("{authorId:guid}")]
+    [HttpGet("{authorId:Guid}")]
     public async Task<ActionResult> GetBooksByAuthor(Guid authorId)
     {
       var book = await _service.BookService.GetBookByAuthorAsync(authorId, trackChanges: false);
       return Ok(book);
     }
 
-    [HttpGet("{authorId:guid}/{id:guid}")]
+    [HttpGet("{authorId:Guid}/{id:Guid}")]
     public async Task<ActionResult> GetBookById(Guid authorId, Guid id)
     {
       var book = await _service.BookService.GetBookByIdAsync(authorId, id, trackChanges: false);
       return Ok(book);
     }
 
-    [HttpDelete("{authorId:guid}/{id:guid}")]
+    [HttpDelete("{authorId:Guid}/{id:Guid}")]
     public async Task<IActionResult> DeleteBook(Guid authorId, Guid id)
     {
       await _service.BookService.DeleteBookAsync(authorId, id, trackChanges: false);
       return NoContent();
     }
 
-    [HttpPost("{authorId:guid}")]
+    [HttpPost("{authorId:Guid}")]
     public async Task<IActionResult> CreateBook(Guid authorId, [FromBody]CreateUpdateBookDTO book)
     {
       if (book is null)
@@ -63,7 +63,7 @@ namespace ModsenTestTask.Controllers
       bookToReturn);
     }
 
-    [HttpPut("{authorId:guid}/{id:guid}")]
+    [HttpPut("{authorId:Guid}/{id:Guid}")]
     public async Task<IActionResult> UpdateBook(Guid authorId, Guid id, [FromBody] CreateUpdateBookDTO book)
     {
       if (book is null)
