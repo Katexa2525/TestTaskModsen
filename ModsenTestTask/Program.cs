@@ -1,6 +1,7 @@
 using Contracts;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using ModsenTestTask.Extensions;
 using NLog;
@@ -27,6 +28,7 @@ try
   builder.Services.AddAuthentication();
   builder.Services.ConfigureIdentity();
   builder.Services.ConfigureJWT(builder.Configuration);
+  builder.Services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/dist"; });
 
   builder.Services.AddControllers();
   // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -50,7 +52,7 @@ try
 
   app.UseHttpsRedirection();
 
-  //app.UseStaticFiles();
+  app.UseStaticFiles();
 
   app.UseForwardedHeaders(new ForwardedHeadersOptions
   {
@@ -66,6 +68,21 @@ try
   app.UseAuthorization();
 
   app.MapControllers();
+
+  if (!app.Environment.IsDevelopment())
+  {
+    app.UseSpaStaticFiles();
+  }
+
+  app.UseSpa(spa =>
+  {
+    spa.Options.SourcePath = "ClientApp";
+
+    if (app.Environment.IsDevelopment())
+    {
+      spa.UseAngularCliServer(npmScript: "start");
+    }
+  });
 
   app.Run();
 }
