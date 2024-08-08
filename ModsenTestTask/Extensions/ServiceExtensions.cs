@@ -57,7 +57,7 @@ namespace ModsenTestTask.Extensions
     public static void ConfigureJWT(this IServiceCollection services, IConfiguration configuration)
     {
       var jwtSettings = configuration.GetSection("JwtSettings");
-      var secretKey = Environment.GetEnvironmentVariable("SECRET");
+      string? secretKey = configuration.GetSection("SECRET").ToString();
       services.AddAuthentication(opt =>
       {
         opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
