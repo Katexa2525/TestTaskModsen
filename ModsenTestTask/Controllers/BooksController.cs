@@ -24,6 +24,8 @@ namespace ModsenTestTask.Controllers
     public async Task<ActionResult> GetAllBooks([FromQuery] BookParameters bookParameters)
     {
       var pagedResult = await _service.BookService.GetAllBooksAsync(bookParameters, trackChanges: false);
+      if (pagedResult.metaData is null)
+        return BadRequest("pagedResultMeta object is null");
       Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
       return Ok(pagedResult.books);
     }
@@ -55,6 +57,8 @@ namespace ModsenTestTask.Controllers
       if (book is null)
         return BadRequest("CreateBookDTO object is null");
       var bookToReturn = await _service.BookService.CreateBookAsync(authorId, book, trackChanges: false);
+      if(bookToReturn is null)
+        return BadRequest("bookToReturn object is null");
       return CreatedAtRoute("GetBookById", new
       {
         authorId,

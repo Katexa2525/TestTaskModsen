@@ -32,7 +32,7 @@ namespace ModsenTask_Test
     }
 
     [Fact]
-    public async Task GetGetAuthorByIdTest()
+    public async Task GetAuthorByIdTest()
     {
       //Arrange
       var mock = new Mock<IServiceManager>();
