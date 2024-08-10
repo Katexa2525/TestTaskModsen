@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoggerService", "LoggerServ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "Service\Service.csproj", "{FDEA7277-6C4F-4352-99A4-FF2FFEE20F4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{A1B1FFF9-3B7D-433F-959C-7E584676A21A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{A1B1FFF9-3B7D-433F-959C-7E584676A21A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModsenTask_Test", "ModsenTask_Test\ModsenTask_Test.csproj", "{96EECC50-60C1-43FA-885B-5DA69E84C003}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{A1B1FFF9-3B7D-433F-959C-7E584676A21A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1B1FFF9-3B7D-433F-959C-7E584676A21A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1B1FFF9-3B7D-433F-959C-7E584676A21A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96EECC50-60C1-43FA-885B-5DA69E84C003}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96EECC50-60C1-43FA-885B-5DA69E84C003}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96EECC50-60C1-43FA-885B-5DA69E84C003}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96EECC50-60C1-43FA-885B-5DA69E84C003}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
