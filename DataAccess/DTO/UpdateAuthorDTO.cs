@@ -6,6 +6,6 @@ using System.Threading.Tasks;
 
 namespace Entities.DTO
 {
-  public record UpdateAuthorDTO(string Name, string Surname,DateTime BirthdayDate, string Country,IEnumerable<CreateAuthorDTO> Authors);
+  public record UpdateAuthorDTO(string Name, string Surname,DateTime BirthdayDate, string Country);
 
 }

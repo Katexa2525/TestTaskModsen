@@ -22,7 +22,7 @@ try
   builder.Services.ConfigureLoggerService();
   builder.Services.ConfigureSqlContext(builder.Configuration);
   builder.Services.ConfigureRepositoryManager();
-  builder.Services.AddAutoMapper(Assembly.GetEntryAssembly());
+  builder.Services.AddAutoMapper(typeof(Program));
   builder.Services.ConfigureServiceManager();
   builder.Services.AddAuthentication();
   builder.Services.ConfigureIdentity();

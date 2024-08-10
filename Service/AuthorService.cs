@@ -4,6 +4,7 @@ using Contracts.Services;
 using Entities.DTO;
 using Entities.Exceptions;
 using Entities.Models;
+using System.Collections.Generic;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Service
@@ -22,11 +23,26 @@ namespace Service
     }
     public async Task<AuthorDTO> CreateAuthorAsync(CreateAuthorDTO author)
     {
-      var authorEntity = _mapper.Map<Author>(author);
-      _repository.Author.CreateAuthor(authorEntity);
-      await _repository.SaveAsync();
-      var authorToReturn = _mapper.Map<AuthorDTO>(authorEntity);
-      return authorToReturn;
+        //var authorEntity = _mapper.Map<Author>(author);
+        Author authorEntity = new Author
+        {
+          BirthdayDate = author.BirthdayDate,
+          Country = author.Country,
+          Name = author.Name,
+          Surname = author.Surname,
+          Id = Guid.NewGuid()
+        };
+        _repository.Author.CreateAuthor(authorEntity);
+        await _repository.SaveAsync();
+      AuthorDTO authorToReturn = new AuthorDTO
+      {
+        Id = authorEntity.Id,
+        BirthdayDate = authorEntity.BirthdayDate,
+        Country = authorEntity.Country,
+        Name = authorEntity.Name,
+        Surname = authorEntity.Surname,
+      };//_mapper.Map<AuthorDTO>(authorEntity);
+        return authorToReturn;
     }
     public async Task DeleteAuthorAsync(Guid id, bool trackChanges)
     {
@@ -40,8 +56,16 @@ namespace Service
     public async Task<IEnumerable<AuthorDTO>> GetAllAuthorsAsync(bool trackChanges)
     {
       var authors = await _repository.Author.GetAllAuthorsAsync(trackChanges: false);
-      var authorsDTO = _mapper.Map<IEnumerable<AuthorDTO>>(authors);
-      return authorsDTO;
+      //var authorsDTO = _mapper.Map<IEnumerable<AuthorDTO>>(authors);
+      IEnumerable<AuthorDTO> authorToReturn = authors.Select(authors => new AuthorDTO
+      {
+        Id = authors.Id,
+        BirthdayDate = authors.BirthdayDate,
+        Country = authors.Country,
+        Name = authors.Name,
+        Surname = authors.Surname,
+      });
+      return authorToReturn;
     }
 
     public async Task<AuthorDTO> GetAuthorAsync(Guid id, bool trackChanges)
@@ -50,7 +74,14 @@ namespace Service
       if (author is null)
         throw new AuthorNotFoundException(id);
 
-      var authorDTO = _mapper.Map<AuthorDTO>(author);
+      var authorDTO = new AuthorDTO
+      {
+        Id = author.Id,
+        BirthdayDate = author.BirthdayDate,
+        Country = author.Country,
+        Name = author.Name,
+        Surname = author.Surname,
+      };//_mapper.Map<AuthorDTO>(author);
       return authorDTO;
     }
 
@@ -59,7 +90,13 @@ namespace Service
       var authorEntity = await _repository.Author.GetAuthorByIdAsync(authorId, trackChanges);
       if (authorEntity is null)
         throw new AuthorNotFoundException(authorId);
-      _mapper.Map(UpdateAuthor, authorEntity);
+
+      authorEntity.Name = UpdateAuthor.Name;
+      authorEntity.Surname = UpdateAuthor.Surname;
+      authorEntity.BirthdayDate = UpdateAuthor.BirthdayDate;
+      authorEntity.Country = UpdateAuthor.Country;
+     
+      //_mapper.Map(UpdateAuthor, authorEntity);
       await _repository.SaveAsync();
     }
   }

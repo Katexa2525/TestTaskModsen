@@ -32,10 +32,28 @@ namespace Service
       var author = await _repository.Author.GetAuthorByIdAsync(authorId, trackChanges);
       if (author is null)
         throw new AuthorNotFoundException(authorId);
-      var bookEntity = _maper.Map<Book>(createBook);
+      Book bookEntity = new Book 
+      {
+        Id = Guid.NewGuid(),
+        Name = createBook.Name,
+        ISBN = createBook.ISBN,
+        Jenre = createBook.Jenre,
+        ReturnTime = createBook.ReturnTime,
+        TakeTime = createBook.TakeTime
+      };
+      //var bookEntity = _maper.Map<Book>(createBook);
       _repository.Book.CreateBook(authorId, bookEntity);
       await _repository.SaveAsync();
-      var bookToReturn = _maper.Map<BookDTO>(bookEntity);
+      //var bookToReturn = _maper.Map<BookDTO>(bookEntity);
+      BookDTO bookToReturn = new BookDTO 
+      {
+        Id = bookEntity.Id,
+        Name = bookEntity.Name,
+        ISBN = bookEntity.ISBN,
+        Jenre = bookEntity.Jenre,
+        ReturnTime = bookEntity.ReturnTime,
+        TakeTime = bookEntity.TakeTime,
+      };
       return bookToReturn;
     }
 
@@ -51,7 +69,16 @@ namespace Service
     public async Task<(IEnumerable<BookDTO> books, MetaData metaData)> GetAllBooksAsync(BookParameters bookParameters, bool trackChanges)
     {
       var booksWithMetaData = await _repository.Book.GetAllBooksAsync(bookParameters, trackChanges);
-      var booksDTO = _maper.Map<IEnumerable<BookDTO>>(booksWithMetaData);
+      IEnumerable<BookDTO> booksDTO = booksWithMetaData.Select(booksWithMetaData => new BookDTO
+      {
+        Id = booksWithMetaData.Id,
+        Name = booksWithMetaData.Name,
+        Jenre = booksWithMetaData.Jenre,
+        ISBN = booksWithMetaData.ISBN,
+        ReturnTime = booksWithMetaData.ReturnTime,
+        TakeTime = booksWithMetaData.TakeTime,
+      });
+      //var booksDTO = _maper.Map<IEnumerable<BookDTO>>(booksWithMetaData);
       return (books: booksDTO, metaData: booksWithMetaData.MetaData);
     }
 
@@ -61,7 +88,16 @@ namespace Service
       if (author == null)
         throw new AuthorNotFoundException(authorId);
       var booksFromDB = await _repository.Book.GetBookByAuthorAsync(authorId, trackChanges: false);
-      var booksDto = _maper.Map<IEnumerable<BookDTO>>(booksFromDB);
+      //var booksDto = _maper.Map<IEnumerable<BookDTO>>(booksFromDB);
+      IEnumerable<BookDTO> booksDto = booksFromDB.Select(booksFromDB => new BookDTO
+      {
+        Id = booksFromDB.Id,
+        Name = booksFromDB.Name,
+        Jenre = booksFromDB.Jenre,
+        ISBN = booksFromDB.ISBN,
+        ReturnTime = booksFromDB.ReturnTime,
+        TakeTime = booksFromDB.TakeTime,
+      });
       return booksDto;
     }
 
@@ -73,7 +109,17 @@ namespace Service
       var bookDb = await _repository.Book.GetBookByIdAsync(authorId, id, trackChanges: false);
       if (bookDb is null)
         throw new BookNotFoundException(id);
-      var book = _maper.Map<BookDTO>(bookDb);
+      
+      BookDTO book = new BookDTO 
+      {
+         Id = bookDb.Id,
+         ISBN = bookDb.ISBN,
+         Jenre = bookDb.Jenre,
+         Name = bookDb.Name,
+         ReturnTime = bookDb.ReturnTime,
+         TakeTime = bookDb.TakeTime,
+      };
+      //var book = _maper.Map<BookDTO>(bookDb);
       return book;
     }
 
@@ -85,7 +131,14 @@ namespace Service
       var bookEntity = await _repository.Book.GetBookByIdAsync(authorId, id, bookTrackChanges);
       if (bookEntity is null)
         throw new BookNotFoundException(id);
-      _maper.Map(bookUpdate, bookEntity);
+
+      bookEntity.Name = bookUpdate.Name;
+      bookEntity.ISBN = bookUpdate.ISBN;
+      bookEntity.Jenre = bookUpdate.Jenre;
+      bookEntity.ReturnTime = bookUpdate.ReturnTime;
+      bookEntity.TakeTime = bookUpdate.TakeTime;
+
+      //_maper.Map(bookUpdate, bookEntity);
       await _repository.SaveAsync();
     }
   }

@@ -33,8 +33,18 @@ namespace Service
 
     public async Task<IdentityResult> RegisterUser(UserForRegistrationDTO userForRegistration)
     {
-      var user = _mapper.Map<User>(userForRegistration);
-      var result = await _userManager.CreateAsync(user, userForRegistration.Password);
+      //var user = _mapper.Map<User>(userForRegistration);
+      User user = new User
+      {
+        Id = Guid.NewGuid().ToString(),
+        FirstName = userForRegistration.FirstName,
+        LastName = userForRegistration.LastName,
+        Email = userForRegistration.Email,
+        PhoneNumber = userForRegistration.PhoneNumber,
+        UserName = userForRegistration.UserName,
+        PasswordHash = userForRegistration.PasswordHash,
+      };
+      var result = await _userManager.CreateAsync(user, userForRegistration.PasswordHash);
       if (result.Succeeded)
         await _userManager.AddToRolesAsync(user, userForRegistration.Roles);
       return result;
@@ -57,7 +67,7 @@ namespace Service
     }
     private SigningCredentials GetSigningCredentials()
     {
-      var key = Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("SECRET"));
+      var key = Encoding.UTF8.GetBytes(_configuration.GetSection("SECRET").ToString());
       var secret = new SymmetricSecurityKey(key);
       return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
     }

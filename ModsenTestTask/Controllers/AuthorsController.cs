@@ -22,7 +22,7 @@ namespace ModsenTestTask.Controllers
     }
 
     [HttpGet]
-    [Authorize(Roles = "User")]
+    //[Authorize(Roles = "User")]
     public async Task<IActionResult> GetAuthors() 
     {
       var authors = await _service.AuthorService.GetAllAuthorsAsync(trackChanges:false);
@@ -49,7 +49,7 @@ namespace ModsenTestTask.Controllers
       if (author is null)
         return BadRequest("CreateAuthorDTO object is null");
       var createdAuthor = await _service.AuthorService.CreateAuthorAsync(author);
-      return CreatedAtRoute("AuthorById", new { id = createdAuthor.Id },createdAuthor);
+      return CreatedAtRoute("GetAuthorById", new { id = createdAuthor.Id },createdAuthor);
     }
 
     [HttpPut("{id:Guid}")]

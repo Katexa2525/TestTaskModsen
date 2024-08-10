@@ -9,7 +9,13 @@ namespace Entities
   {
     public MappingProfile() 
     {
-      CreateMap<Author, AuthorDTO>();
+      CreateMap<Author, AuthorDTO>()
+      .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+      .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+      .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => src.Surname))
+      .ForMember(dest => dest.BirthdayDate, opt => opt.MapFrom(src => src.BirthdayDate))
+      .ForMember(dest => dest.Country, opt => opt.MapFrom(src => src.Country));
+
       CreateMap<Book, BookDTO>();
       CreateMap<CreateAuthorDTO, Author>();
       CreateMap<UpdateAuthorDTO, Author>();

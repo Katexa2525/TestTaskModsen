@@ -20,7 +20,7 @@ namespace ModsenTestTask.Controllers
     }
 
     [HttpGet]
-    [Authorize(Roles = "User")]
+    //[Authorize(Roles = "User")]
     public async Task<ActionResult> GetAllBooks([FromQuery] BookParameters bookParameters)
     {
       var pagedResult = await _service.BookService.GetAllBooksAsync(bookParameters, trackChanges: false);
@@ -35,7 +35,7 @@ namespace ModsenTestTask.Controllers
       return Ok(book);
     }
 
-    [HttpGet("{authorId:Guid}/{id:Guid}")]
+    [HttpGet("{authorId:Guid}/{id:Guid}", Name = "GetBookById")]
     public async Task<ActionResult> GetBookById(Guid authorId, Guid id)
     {
       var book = await _service.BookService.GetBookByIdAsync(authorId, id, trackChanges: false);
@@ -55,7 +55,7 @@ namespace ModsenTestTask.Controllers
       if (book is null)
         return BadRequest("CreateBookDTO object is null");
       var bookToReturn = await _service.BookService.CreateBookAsync(authorId, book, trackChanges: false);
-      return CreatedAtRoute("GetBook", new
+      return CreatedAtRoute("GetBookById", new
       {
         authorId,
         id = bookToReturn.Id
