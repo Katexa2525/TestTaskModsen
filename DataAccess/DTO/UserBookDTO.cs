@@ -6,5 +6,10 @@ using System.Threading.Tasks;
 
 namespace Entities.DTO
 {
-  public record CreateUpdateBookDTO(string ISBN, string Name, string Jenre, byte[] Image, DateTime TakeTime, DateTime ReturnTime);
+  public class UserBookDTO
+  {
+    public Guid Id { get; set; }
+    public Guid IdBook { get; set; }
+    public string IdUser { get; set; }
+  }
 }

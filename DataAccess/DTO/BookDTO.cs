@@ -13,6 +13,7 @@ namespace Entities.DTO
     public string ISBN { get; set; }
     public string Name { get; set; }
     public string Jenre { get; set; }
+    public byte[] Image { get; set; }
     public DateTime TakeTime { get; set; }
     public DateTime ReturnTime { get; set; }
   }

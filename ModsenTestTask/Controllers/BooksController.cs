@@ -44,6 +44,13 @@ namespace ModsenTestTask.Controllers
       return Ok(book);
     }
 
+    [HttpGet("{ISBN}", Name = "GetBookByISBN")]
+    public async Task<ActionResult> GetBookByISBN(string ISBN)
+    {
+      var book = await _service.BookService.GetBookByISBNAsync(ISBN, trackChanges: false);
+      return Ok(book);
+    }
+
     [HttpDelete("{authorId:Guid}/{id:Guid}")]
     public async Task<IActionResult> DeleteBook(Guid authorId, Guid id)
     {

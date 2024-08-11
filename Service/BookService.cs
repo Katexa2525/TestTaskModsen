@@ -123,6 +123,25 @@ namespace Service
       return book;
     }
 
+    public async Task<BookDTO> GetBookByISBNAsync(string ISBN, bool trackChanges)
+    {
+      var bookDb = await _repository.Book.GetBookByISBNAsync(ISBN, trackChanges: false);
+      if (bookDb is null)
+        throw new BookNotFoundByISBN(ISBN);
+
+      BookDTO book = new BookDTO
+      {
+        Id = bookDb.Id,
+        ISBN = bookDb.ISBN,
+        Jenre = bookDb.Jenre,
+        Name = bookDb.Name,
+        ReturnTime = bookDb.ReturnTime,
+        TakeTime = bookDb.TakeTime,
+      };
+      //var book = _maper.Map<BookDTO>(bookDb);
+      return book;
+    }
+
     public async Task UpdateBookAsync(Guid authorId, Guid id, CreateUpdateBookDTO bookUpdate, bool authTrackChanges, bool bookTrackChanges)
     {
       var author = await _repository.Author.GetAuthorByIdAsync(authorId, authTrackChanges);

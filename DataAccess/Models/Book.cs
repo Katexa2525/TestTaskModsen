@@ -24,6 +24,7 @@ namespace Entities.Models
     [Required(ErrorMessage = "Book jenre is a required field.")]
     [MaxLength(30, ErrorMessage = "Maximum length for the Jenre is 30 characters.")]
     public string? Jenre { get; set; }
+    public byte[] Image { get; set; }
 
     [Required(ErrorMessage = "Book TakeTime is a required field.")]
     public DateTime TakeTime { get; set; }
