@@ -9,9 +9,9 @@ namespace Contracts.Services
 {
   public interface IUserBookService
   {
-    Task<UserBookDTO> CreateUserBookAsync(UserBookDTO createUserBook, bool trackChanges);
+    Task<UserBookDTO> CreateUserBookAsync(CreateUserBookDTO createUserBook, bool trackChanges);
     Task<IEnumerable<UserBookDTO>> GetAllUserBooksAsync(bool trackChanges);
-    Task<UserBookDTO> GetUserBookAsync(Guid bookId, Guid userId, bool trackChanges);
-    Task DeleteUserBookAsync(Guid bookId, Guid userId, bool trackChanges);
+    Task<UserBookDTO> GetUserBookAsync(Guid bookId, string userId, bool trackChanges);
+    Task DeleteUserBookAsync(Guid bookId, string userId, bool trackChanges);
   }
 }

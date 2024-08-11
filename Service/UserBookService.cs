@@ -24,7 +24,7 @@ namespace Service
       _logger = logger;
       _maper = maper;
     }
-    public async Task<UserBookDTO> CreateUserBookAsync(UserBookDTO createUserBook, bool trackChanges)
+    public async Task<UserBookDTO> CreateUserBookAsync(CreateUserBookDTO createUserBook, bool trackChanges)
     {
       UserBook userBook = new UserBook
       {
@@ -36,14 +36,14 @@ namespace Service
       await _repository.SaveAsync();
       UserBookDTO userBookDTO = new UserBookDTO
       {
-        Id = userBook.Id,
+        //Id = userBook.Id,
         IdBook = userBook.IdBook,
         IdUser = userBook.IdUser,
       };
       return userBookDTO;
     }
 
-    public async Task DeleteUserBookAsync(Guid bookId, Guid userId, bool trackChanges)
+    public async Task DeleteUserBookAsync(Guid bookId, string userId, bool trackChanges)
     {
       var userBookById = await _repository.UserBook.GetUserBookByIdAsync(bookId, userId, trackChanges);
       if (userBookById is null)
@@ -65,7 +65,7 @@ namespace Service
       return userBookToReturn;
     }
 
-    public async Task<UserBookDTO> GetUserBookAsync(Guid bookId, Guid userId, bool trackChanges)
+    public async Task<UserBookDTO> GetUserBookAsync(Guid bookId, string userId, bool trackChanges)
     {
       var userBook = await _repository.UserBook.GetUserBookByIdAsync(bookId, userId, trackChanges: false);
       if (userBook is null)

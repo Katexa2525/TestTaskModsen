@@ -23,7 +23,7 @@ namespace Repository
 
     public async Task<IEnumerable<UserBook>> GetAllUserBooksAsync(bool trackChanges) => await FindAll(trackChanges).ToListAsync();
 
-    public async Task<UserBook> GetUserBookByIdAsync(Guid bookId, Guid userId, bool trackChanges)=>
+    public async Task<UserBook> GetUserBookByIdAsync(Guid bookId, string userId, bool trackChanges)=>
        await FindByCondition(c => c.IdBook.Equals(bookId) && c.IdUser.Equals(userId), trackChanges).SingleOrDefaultAsync();
 
     public void PostBookToUserAsync(UserBook userBook)

@@ -6,7 +6,7 @@ namespace Contracts
   {
     void PostBookToUserAsync(UserBook userBook);
     Task<IEnumerable<UserBook>> GetAllUserBooksAsync(bool trackChanges);
-    Task<UserBook> GetUserBookByIdAsync(Guid bookId, Guid userId, bool trackChanges);
+    Task<UserBook> GetUserBookByIdAsync(Guid bookId, string userId, bool trackChanges);
     void DeleteUserBook(UserBook userBook);
   }
 }
