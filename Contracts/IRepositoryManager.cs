@@ -12,6 +12,6 @@ namespace Contracts
     IBookRepository Book { get; }
     IUserRepository User { get; }
     IUserBookRepository UserBook { get; }
-    void Save();
+    Task SaveAsync();
   }
 }

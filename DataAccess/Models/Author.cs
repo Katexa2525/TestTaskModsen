@@ -23,8 +23,8 @@ namespace Entities.Models
 
     public DateTime BirthdayDate { get; set; }
 
-    public string Country { get; set; } 
-
-    public ICollection<Book> Books { get; set; }  
+    public string Country { get; set; }
+    
+    public ICollection<Book>? Books { get; set; }  
   }
 }

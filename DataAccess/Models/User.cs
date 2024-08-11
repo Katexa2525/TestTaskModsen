@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,21 +9,12 @@ using System.Threading.Tasks;
 
 namespace Entities.Models
 {
-  public class User
+  public class User : IdentityUser
   {
-    [Column("UserId")]
-    public Guid Id { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
 
-    [Required(ErrorMessage = "User name is a required field.")]
-    [MaxLength(30, ErrorMessage = "Maximum length for the Name is 30 characters.")]
-    public string Name { get; set; }
-
-    [Required(ErrorMessage = "Email is a required field.")]
-    [MaxLength(50, ErrorMessage = "Maximum length for the Email is 50 characters.")]
-    public string Email { get; set; }
-
-    public string PasswordHash { get; set; }
-
-    public ICollection<UserBook> UserBooks { get; set; }  
+    public string? RefreshToken { get; set; }
+    public DateTime RefreshTokenExpiryTime { get; set; }
   }
 }

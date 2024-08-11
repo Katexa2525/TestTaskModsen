@@ -1,4 +1,5 @@
 ﻿using Contracts;
+using Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,6 +61,6 @@ namespace Repository
       }
     }
 
-    public void Save() => _repositoryContext.SaveChanges();
+    public async Task SaveAsync() => await _repositoryContext.SaveChangesAsync();
   }
 }

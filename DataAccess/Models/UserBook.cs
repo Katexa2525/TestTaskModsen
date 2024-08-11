@@ -18,7 +18,7 @@ namespace Entities.Models
     public Book Book { get; set; }
 
     [ForeignKey(nameof(User))]
-    public Guid IdUser { get; set; }
-    public User User { get; set; }
+    public string IdUser { get; set; }
+    public User? User { get; set; }
   }
 }
