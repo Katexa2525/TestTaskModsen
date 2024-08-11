@@ -4,6 +4,7 @@ using Contracts.Services;
 using Entities.DTO;
 using Entities.Exceptions;
 using Entities.Models;
+using Entities.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,21 +27,27 @@ namespace Service
     }
     public async Task<UserBookDTO> CreateUserBookAsync(CreateUserBookDTO createUserBook, bool trackChanges)
     {
+      var validator = new UserBookValidation();
       UserBook userBook = new UserBook
       {
         Id = Guid.NewGuid(),
         IdBook = createUserBook.IdBook,
         IdUser = createUserBook.IdUser,
       };
-      _repository.UserBook.PostBookToUserAsync(userBook);
-      await _repository.SaveAsync();
-      UserBookDTO userBookDTO = new UserBookDTO
+      var validationResult = validator.Validate(userBook);
+      if (validationResult.IsValid)
       {
-        //Id = userBook.Id,
-        IdBook = userBook.IdBook,
-        IdUser = userBook.IdUser,
-      };
-      return userBookDTO;
+        _repository.UserBook.PostBookToUserAsync(userBook);
+        await _repository.SaveAsync();
+        UserBookDTO userBookDTO = new UserBookDTO
+        {
+          Id = userBook.Id,
+          IdBook = userBook.IdBook,
+          IdUser = userBook.IdUser,
+        };
+        return userBookDTO;
+      }
+      return null;
     }
 
     public async Task DeleteUserBookAsync(Guid bookId, string userId, bool trackChanges)
