@@ -49,6 +49,8 @@ namespace ModsenTestTask.Controllers
       if (author is null)
         return BadRequest("CreateAuthorDTO object is null");
       var createdAuthor = await _service.AuthorService.CreateAuthorAsync(author);
+      if (createdAuthor is null)
+        return BadRequest("AuthorDTO object is null");
       return CreatedAtRoute("GetAuthorById", new { id = createdAuthor.Id },createdAuthor);
     }
 
