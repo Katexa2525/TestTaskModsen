@@ -4,6 +4,8 @@ using Contracts.Services;
 using Entities.DTO;
 using Entities.Exceptions;
 using Entities.Models;
+using Entities.Validation;
+using Microsoft.AspNetCore.Http;
 using Shared.RequestFeatures;
 using System;
 using System.Collections.Generic;
@@ -29,6 +31,7 @@ namespace Service
 
     public async Task<BookDTO> CreateBookAsync(Guid authorId, CreateUpdateBookDTO createBook, bool trackChanges)
     {
+      var validator = new BookValidator();
       var author = await _repository.Author.GetAuthorByIdAsync(authorId, trackChanges);
       if (author is null)
         throw new AuthorNotFoundException(authorId);
@@ -38,25 +41,42 @@ namespace Service
         Name = createBook.Name,
         ISBN = createBook.ISBN,
         Jenre = createBook.Jenre,
+        //Image = createBook.Image,
         ReturnTime = createBook.ReturnTime,
         TakeTime = createBook.TakeTime
       };
-      //var bookEntity = _maper.Map<Book>(createBook);
-      _repository.Book.CreateBook(authorId, bookEntity);
-      await _repository.SaveAsync();
-      //var bookToReturn = _maper.Map<BookDTO>(bookEntity);
-      BookDTO bookToReturn = new BookDTO 
+      if (createBook.Image != null)
       {
-        Id = bookEntity.Id,
-        Name = bookEntity.Name,
-        ISBN = bookEntity.ISBN,
-        Jenre = bookEntity.Jenre,
-        ReturnTime = bookEntity.ReturnTime,
-        TakeTime = bookEntity.TakeTime,
-      };
-      return bookToReturn;
+        byte[] imageData = null;
+        // считываем переданный файл в массив байтов
+        using (var binaryReader = new BinaryReader(createBook.Image.OpenReadStream()))
+        {
+          imageData = binaryReader.ReadBytes((int)createBook.Image.Length);
+        }
+        // установка массива байтов
+        bookEntity.Image = imageData;
+      }
+      var validationResult = validator.Validate(bookEntity);
+      if (validationResult.IsValid)
+      {
+        //var bookEntity = _maper.Map<Book>(createBook);
+        _repository.Book.CreateBook(authorId, bookEntity);
+        await _repository.SaveAsync();
+        //var bookToReturn = _maper.Map<BookDTO>(bookEntity);
+        BookDTO bookToReturn = new BookDTO
+        {
+          Id = bookEntity.Id,
+          Name = bookEntity.Name,
+          ISBN = bookEntity.ISBN,
+          Jenre = bookEntity.Jenre,
+          ReturnTime = bookEntity.ReturnTime,
+          TakeTime = bookEntity.TakeTime,
+        };
+        return bookToReturn;
+      }
+      return null;
     }
-
+  
     public async Task DeleteBookAsync(Guid authorId,Guid id, bool trackChanges)
     {
       var bookById = await _repository.Book.GetBookByIdAsync(authorId,id, trackChanges);
@@ -123,23 +143,56 @@ namespace Service
       return book;
     }
 
+    public async Task<BookDTO> GetBookByISBNAsync(string ISBN, bool trackChanges)
+    {
+      var bookDb = await _repository.Book.GetBookByISBNAsync(ISBN, trackChanges: false);
+      if (bookDb is null)
+        throw new BookNotFoundByISBN(ISBN);
+
+      BookDTO book = new BookDTO
+      {
+        Id = bookDb.Id,
+        ISBN = bookDb.ISBN,
+        Jenre = bookDb.Jenre,
+        Name = bookDb.Name,
+        ReturnTime = bookDb.ReturnTime,
+        TakeTime = bookDb.TakeTime,
+      };
+      //var book = _maper.Map<BookDTO>(bookDb);
+      return book;
+    }
+
     public async Task UpdateBookAsync(Guid authorId, Guid id, CreateUpdateBookDTO bookUpdate, bool authTrackChanges, bool bookTrackChanges)
     {
+      var validator = new BookValidator();
       var author = await _repository.Author.GetAuthorByIdAsync(authorId, authTrackChanges);
       if (author is null)
         throw new AuthorNotFoundException(authorId);
       var bookEntity = await _repository.Book.GetBookByIdAsync(authorId, id, bookTrackChanges);
       if (bookEntity is null)
         throw new BookNotFoundException(id);
-
-      bookEntity.Name = bookUpdate.Name;
-      bookEntity.ISBN = bookUpdate.ISBN;
-      bookEntity.Jenre = bookUpdate.Jenre;
-      bookEntity.ReturnTime = bookUpdate.ReturnTime;
-      bookEntity.TakeTime = bookUpdate.TakeTime;
-
-      //_maper.Map(bookUpdate, bookEntity);
-      await _repository.SaveAsync();
+      var validationResult = validator.Validate(bookEntity);
+      if (validationResult.IsValid)
+      {
+        bookEntity.Name = bookUpdate.Name;
+        bookEntity.ISBN = bookUpdate.ISBN;
+        bookEntity.Jenre = bookUpdate.Jenre;
+        bookEntity.ReturnTime = bookUpdate.ReturnTime;
+        bookEntity.TakeTime = bookUpdate.TakeTime;
+        if (bookUpdate.Image != null)
+        {
+          byte[] imageData = null;
+          // считываем переданный файл в массив байтов
+          using (var binaryReader = new BinaryReader(bookUpdate.Image.OpenReadStream()))
+          {
+            imageData = binaryReader.ReadBytes((int)bookUpdate.Image.Length);
+          }
+          // установка массива байтов
+          bookEntity.Image = imageData;
+        }
+        //_maper.Map(bookUpdate, bookEntity);
+        await _repository.SaveAsync();
+      }
     }
   }
 }

@@ -37,5 +37,8 @@ namespace Repository
     public async Task<IEnumerable<Book>> GetBookByAuthorAsync(Guid authorId, bool trackChanges) => await FindByCondition(c => c.IdAuthor.Equals(authorId), trackChanges).OrderBy(c => c.Name).ToListAsync();
 
     public async Task<Book> GetBookByIdAsync(Guid authorId, Guid id, bool trackChanges) => await FindByCondition(c => c.IdAuthor.Equals(authorId) && c.Id.Equals(id), trackChanges).SingleOrDefaultAsync();
+
+    public async Task<Book> GetBookByISBNAsync(string ISBN, bool trackChanges) =>
+           await FindByCondition(c=>c.ISBN.Equals(ISBN), trackChanges).SingleOrDefaultAsync();
   }
 }

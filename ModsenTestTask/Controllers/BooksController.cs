@@ -44,6 +44,13 @@ namespace ModsenTestTask.Controllers
       return Ok(book);
     }
 
+    [HttpGet("{ISBN}", Name = "GetBookByISBN")]
+    public async Task<ActionResult> GetBookByISBN(string ISBN)
+    {
+      var book = await _service.BookService.GetBookByISBNAsync(ISBN, trackChanges: false);
+      return Ok(book);
+    }
+
     [HttpDelete("{authorId:Guid}/{id:Guid}")]
     public async Task<IActionResult> DeleteBook(Guid authorId, Guid id)
     {
@@ -52,7 +59,7 @@ namespace ModsenTestTask.Controllers
     }
 
     [HttpPost("{authorId:Guid}")]
-    public async Task<IActionResult> CreateBook(Guid authorId, [FromBody]CreateUpdateBookDTO book)
+    public async Task<IActionResult> CreateBook(Guid authorId, [FromForm]CreateUpdateBookDTO book)
     {
       if (book is null)
         return BadRequest("CreateBookDTO object is null");
@@ -68,7 +75,7 @@ namespace ModsenTestTask.Controllers
     }
 
     [HttpPut("{authorId:Guid}/{id:Guid}")]
-    public async Task<IActionResult> UpdateBook(Guid authorId, Guid id, [FromBody] CreateUpdateBookDTO book)
+    public async Task<IActionResult> UpdateBook(Guid authorId, Guid id, [FromForm] CreateUpdateBookDTO book)
     {
       if (book is null)
         return BadRequest("CreateUpdateBookDTO object is null");
