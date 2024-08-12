@@ -59,7 +59,7 @@ namespace ModsenTestTask.Controllers
     }
 
     [HttpPost("{authorId:Guid}")]
-    public async Task<IActionResult> CreateBook(Guid authorId, [FromBody]CreateUpdateBookDTO book)
+    public async Task<IActionResult> CreateBook(Guid authorId, [FromForm]CreateUpdateBookDTO book)
     {
       if (book is null)
         return BadRequest("CreateBookDTO object is null");
@@ -75,7 +75,7 @@ namespace ModsenTestTask.Controllers
     }
 
     [HttpPut("{authorId:Guid}/{id:Guid}")]
-    public async Task<IActionResult> UpdateBook(Guid authorId, Guid id, [FromBody] CreateUpdateBookDTO book)
+    public async Task<IActionResult> UpdateBook(Guid authorId, Guid id, [FromForm] CreateUpdateBookDTO book)
     {
       if (book is null)
         return BadRequest("CreateUpdateBookDTO object is null");

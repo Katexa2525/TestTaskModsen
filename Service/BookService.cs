@@ -5,6 +5,7 @@ using Entities.DTO;
 using Entities.Exceptions;
 using Entities.Models;
 using Entities.Validation;
+using Microsoft.AspNetCore.Http;
 using Shared.RequestFeatures;
 using System;
 using System.Collections.Generic;
@@ -40,9 +41,21 @@ namespace Service
         Name = createBook.Name,
         ISBN = createBook.ISBN,
         Jenre = createBook.Jenre,
+        //Image = createBook.Image,
         ReturnTime = createBook.ReturnTime,
         TakeTime = createBook.TakeTime
       };
+      if (createBook.Image != null)
+      {
+        byte[] imageData = null;
+        // считываем переданный файл в массив байтов
+        using (var binaryReader = new BinaryReader(createBook.Image.OpenReadStream()))
+        {
+          imageData = binaryReader.ReadBytes((int)createBook.Image.Length);
+        }
+        // установка массива байтов
+        bookEntity.Image = imageData;
+      }
       var validationResult = validator.Validate(bookEntity);
       if (validationResult.IsValid)
       {
@@ -63,7 +76,7 @@ namespace Service
       }
       return null;
     }
-
+  
     public async Task DeleteBookAsync(Guid authorId,Guid id, bool trackChanges)
     {
       var bookById = await _repository.Book.GetBookByIdAsync(authorId,id, trackChanges);
@@ -166,7 +179,17 @@ namespace Service
         bookEntity.Jenre = bookUpdate.Jenre;
         bookEntity.ReturnTime = bookUpdate.ReturnTime;
         bookEntity.TakeTime = bookUpdate.TakeTime;
-
+        if (bookUpdate.Image != null)
+        {
+          byte[] imageData = null;
+          // считываем переданный файл в массив байтов
+          using (var binaryReader = new BinaryReader(bookUpdate.Image.OpenReadStream()))
+          {
+            imageData = binaryReader.ReadBytes((int)bookUpdate.Image.Length);
+          }
+          // установка массива байтов
+          bookEntity.Image = imageData;
+        }
         //_maper.Map(bookUpdate, bookEntity);
         await _repository.SaveAsync();
       }

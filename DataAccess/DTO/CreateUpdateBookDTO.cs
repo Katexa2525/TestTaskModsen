@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,5 +7,5 @@ using System.Threading.Tasks;
 
 namespace Entities.DTO
 {
-  public record CreateUpdateBookDTO(string ISBN, string Name, string Jenre/*, byte[] Image*/, DateTime TakeTime, DateTime ReturnTime);
+  public record CreateUpdateBookDTO(string ISBN, string Name, string Jenre, IFormFile Image, DateTime TakeTime, DateTime ReturnTime);
 }
