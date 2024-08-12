@@ -54,7 +54,7 @@ namespace ModsenTask_Test
     [Fact]
     public async Task CreateBookTest()
     {
-      CreateUpdateBookDTO createBookDTO = new CreateUpdateBookDTO("1234", "TestName", "Comedy", new DateTime(1977, 07, 29),
+      CreateUpdateBookDTO createBookDTO = new CreateUpdateBookDTO("1234", "TestName", "Comedy", null, new DateTime(1977, 07, 29),
                                                                   new DateTime(1977, 08, 29));
 
       //Arrange
