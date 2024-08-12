@@ -33,17 +33,17 @@ namespace ModsenTestTask.Controllers
       return Ok(userBooks);
     }
 
-    [HttpGet("{bookId:Guid}/{userId}", Name = "GetUserBookById")]
-    public async Task<IActionResult> GetUserBookById(Guid bookId, string userId)
+    [HttpGet("{bookId:Guid}/{userName}", Name = "GetUserBookById")]
+    public async Task<IActionResult> GetUserBookById(Guid bookId, string userName)
     {
-      var userBook = await _service.UserBookService.GetUserBookAsync(bookId, userId, trackChanges: false);
+      var userBook = await _service.UserBookService.GetUserBookAsync(bookId, userName, trackChanges: false);
       return Ok(userBook);
     }
 
-    [HttpDelete("{bookId:Guid}/{userId}")]
-    public async Task<IActionResult> DeleteUserBook(Guid bookId, string userId)
+    [HttpDelete("{bookId:Guid}/{userName}")]
+    public async Task<IActionResult> DeleteUserBook(Guid bookId, string userName)
     {
-      await _service.UserBookService.DeleteUserBookAsync(bookId, userId, trackChanges: false);
+      await _service.UserBookService.DeleteUserBookAsync(bookId, userName, trackChanges: false);
       return NoContent();
     }
   }

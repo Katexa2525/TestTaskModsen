@@ -24,7 +24,7 @@ namespace Service
       _authorService = new Lazy<IAuthorService>(() => new AuthorService(repositoryManager, logger, mapper));
       _bookService = new Lazy<IBookService>(() => new BookService(repositoryManager, logger, mapper));
       _authenticationService = new Lazy<IAuthenticationService>(() => new AuthenticationService(logger, mapper, userManager, configuration));
-      _userBookService = new Lazy<IUserBookService>(() => new UserBookService(repositoryManager, logger, mapper));
+      _userBookService = new Lazy<IUserBookService>(() => new UserBookService(repositoryManager, logger, mapper, userManager));
     }
     public IAuthorService AuthorService => _authorService.Value;
     public IBookService BookService => _bookService.Value;

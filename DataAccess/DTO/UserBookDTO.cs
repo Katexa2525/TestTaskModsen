@@ -10,6 +10,7 @@ namespace Entities.DTO
   {
     public Guid Id { get; set; }
     public Guid IdBook { get; set; }
+    public string UserName { get; set; }
     public string IdUser { get; set; }
   }
 }

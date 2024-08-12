@@ -9,6 +9,6 @@ namespace Entities.DTO
   public class CreateUserBookDTO
   {
     public Guid IdBook { get; set; }
-    public string IdUser { get; set; }
+    public string UserName { get; set; }
   }
 }
