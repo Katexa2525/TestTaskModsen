@@ -20,7 +20,6 @@ namespace ModsenTestTask.Controllers
     }
 
     [HttpGet]
-    //[Authorize(Roles = "User")]
     public async Task<ActionResult> GetAllBooks([FromQuery] BookParameters bookParameters)
     {
       var pagedResult = await _service.BookService.GetAllBooksAsync(bookParameters, trackChanges: false);

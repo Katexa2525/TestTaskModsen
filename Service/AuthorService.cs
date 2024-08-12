@@ -24,7 +24,6 @@ namespace Service
     {
       var validator = new AuthorValidator();
 
-        //var authorEntity = _mapper.Map<Author>(author);
         Author authorEntity = new Author
         {
           BirthdayDate = author.BirthdayDate,
@@ -46,7 +45,7 @@ namespace Service
           Country = authorEntity.Country,
           Name = authorEntity.Name,
           Surname = authorEntity.Surname,
-        };//_mapper.Map<AuthorDTO>(authorEntity);
+        };
         return authorToReturn;
       }
       return null;
@@ -68,7 +67,6 @@ namespace Service
     public async Task<IEnumerable<AuthorDTO>> GetAllAuthorsAsync(bool trackChanges)
     {
       var authors = await _repository.Author.GetAllAuthorsAsync(trackChanges: false);
-      //var authorsDTO = _mapper.Map<IEnumerable<AuthorDTO>>(authors);
       IEnumerable<AuthorDTO> authorToReturn = authors.Select(authors => new AuthorDTO
       {
         Id = authors.Id,
@@ -93,11 +91,10 @@ namespace Service
         Country = author.Country,
         Name = author.Name,
         Surname = author.Surname,
-      };//_mapper.Map<AuthorDTO>(author);
+      };
       return authorDTO;
     }
 
-    //спросить
     public async Task UpdateAuthorAsync(Guid authorId, UpdateAuthorDTO UpdateAuthor, bool trackChanges)
     {
       var validator = new AuthorValidator();
@@ -112,7 +109,6 @@ namespace Service
         authorEntity.BirthdayDate = UpdateAuthor.BirthdayDate;
         authorEntity.Country = UpdateAuthor.Country;
 
-        //_mapper.Map(UpdateAuthor, authorEntity);
         await _repository.SaveAsync();
       }
     }

@@ -33,7 +33,6 @@ namespace Service
 
     public async Task<IdentityResult> RegisterUser(UserForRegistrationDTO userForRegistration)
     {
-      //var user = _mapper.Map<User>(userForRegistration);
       User user = new User
       {
         Id = Guid.NewGuid().ToString(),

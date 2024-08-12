@@ -41,7 +41,6 @@ namespace Service
         Name = createBook.Name,
         ISBN = createBook.ISBN,
         Jenre = createBook.Jenre,
-        //Image = createBook.Image,
         ReturnTime = createBook.ReturnTime,
         TakeTime = createBook.TakeTime
       };
@@ -59,10 +58,8 @@ namespace Service
       var validationResult = validator.Validate(bookEntity);
       if (validationResult.IsValid)
       {
-        //var bookEntity = _maper.Map<Book>(createBook);
         _repository.Book.CreateBook(authorId, bookEntity);
         await _repository.SaveAsync();
-        //var bookToReturn = _maper.Map<BookDTO>(bookEntity);
         BookDTO bookToReturn = new BookDTO
         {
           Id = bookEntity.Id,
@@ -98,7 +95,6 @@ namespace Service
         ReturnTime = booksWithMetaData.ReturnTime,
         TakeTime = booksWithMetaData.TakeTime,
       });
-      //var booksDTO = _maper.Map<IEnumerable<BookDTO>>(booksWithMetaData);
       return (books: booksDTO, metaData: booksWithMetaData.MetaData);
     }
 
@@ -108,7 +104,6 @@ namespace Service
       if (author == null)
         throw new AuthorNotFoundException(authorId);
       var booksFromDB = await _repository.Book.GetBookByAuthorAsync(authorId, trackChanges: false);
-      //var booksDto = _maper.Map<IEnumerable<BookDTO>>(booksFromDB);
       IEnumerable<BookDTO> booksDto = booksFromDB.Select(booksFromDB => new BookDTO
       {
         Id = booksFromDB.Id,
@@ -139,7 +134,6 @@ namespace Service
          ReturnTime = bookDb.ReturnTime,
          TakeTime = bookDb.TakeTime,
       };
-      //var book = _maper.Map<BookDTO>(bookDb);
       return book;
     }
 
@@ -158,7 +152,6 @@ namespace Service
         ReturnTime = bookDb.ReturnTime,
         TakeTime = bookDb.TakeTime,
       };
-      //var book = _maper.Map<BookDTO>(bookDb);
       return book;
     }
 
@@ -190,7 +183,6 @@ namespace Service
           // установка массива байтов
           bookEntity.Image = imageData;
         }
-        //_maper.Map(bookUpdate, bookEntity);
         await _repository.SaveAsync();
       }
     }

@@ -77,7 +77,6 @@ namespace Service
     public async Task<IEnumerable<UserBookDTO>> GetAllUserBooksAsync(bool trackChanges)
     {
         var userBooks = await _repository.UserBook.GetAllUserBooksAsync(trackChanges: false);
-        //var authorsDTO = _mapper.Map<IEnumerable<AuthorDTO>>(authors);
         IEnumerable<UserBookDTO> userBookToReturn = userBooks.Select(userBooks => new UserBookDTO
         {
           Id = userBooks.Id,
@@ -102,7 +101,7 @@ namespace Service
           Id = userBook.Id,
           IdBook = userBook.IdBook,
           IdUser = userBook.IdUser,
-        };//_mapper.Map<AuthorDTO>(author);
+        };
         return userBookDTO;
       }
       return null;
