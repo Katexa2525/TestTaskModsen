@@ -18,8 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Contracts\Contracts.csproj" />
-    <ProjectReference Include="..\ModsenTestTask\ModsenTestTask.csproj" />
+    <ProjectReference Include="..\ModsenTestTask\Presentation.csproj" />
   </ItemGroup>
 
   <ItemGroup>

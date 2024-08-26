@@ -1,10 +1,7 @@
-using Contracts;
-using Microsoft.AspNetCore.Hosting;
+using Application.Interfaces;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.Extensions.Configuration;
-using ModsenTestTask.Extensions;
 using NLog;
-using System.Reflection;
+using Presentation.Extensions;
 
 string? pathDirectoryName =Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
 _ = LogManager.Setup().LoadConfigurationFromFile(string.Concat(pathDirectoryName, "/Nlog.config"));

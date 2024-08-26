@@ -1,14 +1,8 @@
-using Contracts;
-using Contracts.Services;
-using Entities;
-using Entities.DTO;
-using Entities.Models;
+using Application.Interfaces.Services;
+using Domain.Entities.DTO;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ModsenTestTask.Controllers;
 using Moq;
-using Repository;
-using Service;
+using Presentation.Controllers;
 
 namespace ModsenTask_Test
 {

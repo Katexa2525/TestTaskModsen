@@ -1,14 +1,8 @@
-﻿using AutoMapper;
-using Contracts;
-using Contracts.Services;
-using Entities.DTO;
-using Entities.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Application.Interfaces.Services;
+using Domain.Entities.DTO;
 using Microsoft.AspNetCore.Mvc;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
-namespace ModsenTestTask.Controllers
+namespace Presentation.Controllers
 {
   [Route("api/authors")]
   [ApiController]

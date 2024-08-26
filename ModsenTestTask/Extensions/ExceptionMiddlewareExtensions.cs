@@ -1,10 +1,10 @@
-﻿using Contracts;
-using Entities.ErrorModel;
-using Entities.Exceptions;
+﻿using Application.Interfaces;
+using Domain.Entities.ErrorModel;
+using Domain.Entities.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using System.Net;
 
-namespace ModsenTestTask.Extensions
+namespace Presentation.Extensions
 {
   public static class ExceptionMiddlewareExtensions
   {

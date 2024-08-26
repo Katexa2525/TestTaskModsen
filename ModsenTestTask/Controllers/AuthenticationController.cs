@@ -1,8 +1,8 @@
-﻿using Contracts.Services;
-using Entities.DTO;
+﻿using Application.Interfaces.Services;
+using Domain.Entities.DTO;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ModsenTestTask.Controllers
+namespace Presentation.Controllers
 {
   [Route("api/authentication")]
   [ApiController]

@@ -7,8 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DataAccess\Entities.csproj" />
-    <ProjectReference Include="..\Shared\Shared.csproj" />
+    <ProjectReference Include="..\DataAccess\Domain.csproj" />
   </ItemGroup>
 
 </Project>

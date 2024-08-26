@@ -1,19 +1,18 @@
-﻿using Contracts;
-using Entities;
-using LoggerService;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
-using Microsoft.EntityFrameworkCore;
-using Repository;
-using Contracts.Services;
-using Service;
-using Entities.Models;
-using Microsoft.AspNetCore.Identity;
+﻿using Application.Interfaces;
+using Application.Interfaces.Repository;
+using Application.Interfaces.Services;
+using Application.Services;
+using Domain.Entities.Models;
+using Infrastructure;
+using Infrastructure.Logger;
+using Infrastructure.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace ModsenTestTask.Extensions
+namespace Presentation.Extensions
 {
   public static class ServiceExtensions
   {

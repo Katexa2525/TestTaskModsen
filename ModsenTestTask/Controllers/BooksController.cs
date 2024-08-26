@@ -1,12 +1,10 @@
-﻿using Contracts.Services;
-using Entities.DTO;
-using Microsoft.AspNetCore.Authorization;
+﻿using Application.Interfaces.Services;
+using Domain.Entities.DTO;
+using Domain.RequestFeatures;
 using Microsoft.AspNetCore.Mvc;
-using Shared.RequestFeatures;
-using System.ComponentModel.Design;
 using System.Text.Json;
 
-namespace ModsenTestTask.Controllers
+namespace Presentation.Controllers
 {
   [Route("api/books")]
   [ApiController]
