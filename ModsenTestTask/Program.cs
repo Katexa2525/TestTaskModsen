@@ -32,11 +32,12 @@ try
 
   var app = builder.Build();
   var _logger = app.Services.GetRequiredService<ILoggerManager>();
-  app.ConfigureExceptionHandler(_logger);
+  //app.ConfigureExceptionHandler(_logger);
+  app.UseExceptionHandlerMiddleware();
   // Configure the HTTP request pipeline.
   if (app.Environment.IsDevelopment())
   {
-    app.UseDeveloperExceptionPage();
+    //app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
   }

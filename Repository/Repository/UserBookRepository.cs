@@ -20,6 +20,8 @@ namespace Infrastructure.Repository
         public async Task<UserBook> GetUserBookByIdAsync(Guid bookId, string userId, bool trackChanges) =>
            await FindByCondition(c => c.IdBook.Equals(bookId) && c.IdUser.Equals(userId), trackChanges).SingleOrDefaultAsync();
 
+        public async Task<UserBook> GetUserBookByUBId(Guid Id, bool trackChanges) => await FindByCondition(c => c.Id.Equals(Id), trackChanges).SingleOrDefaultAsync();
+
         public void PostBookToUserAsync(UserBook userBook)
         {
             Create(userBook);

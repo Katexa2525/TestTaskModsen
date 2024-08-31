@@ -36,5 +36,9 @@ namespace Presentation.Extensions
       });
     }
 
+    public static void UseExceptionHandlerMiddleware(this IApplicationBuilder app)
+    {
+      app.UseMiddleware<ExceptionHandlerMiddleware>();
+    }
   }
 }

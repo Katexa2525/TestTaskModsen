@@ -46,5 +46,12 @@ namespace Presentation.Controllers
       await _service.UserBookService.DeleteUserBookAsync(bookId, userName, trackChanges: false);
       return NoContent();
     }
+
+    [HttpDelete("{Id:Guid}")]
+    public async Task<IActionResult> DeleteUserBookById(Guid Id)
+    {
+      await _service.UserBookService.DeleteUserBookByIdAsync(Id, trackChanges: false);
+      return NoContent();
+    }
   }
 }

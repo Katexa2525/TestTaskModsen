@@ -7,13 +7,7 @@ namespace Domain.Entities.Models
     {
         [Column("AuthorId")]
         public Guid Id { get; set; }
-
-        [Required(ErrorMessage = "Author name is a required field.")]
-        [MaxLength(30, ErrorMessage = "Maximum length for the Name is 30 characters.")]
         public string Name { get; set; }
-
-        [Required(ErrorMessage = "Author surname is a required field.")]
-        [MaxLength(30, ErrorMessage = "Maximum length for the Surname is 30 characters.")]
         public string Surname { get; set; }
 
         public DateTime BirthdayDate { get; set; }
