@@ -6,6 +6,8 @@ using Domain.Entities.Models;
 using Infrastructure;
 using Infrastructure.Logger;
 using Infrastructure.Repository;
+using MediatR;
+using MediatR.NotificationPublishers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -76,5 +78,6 @@ namespace Presentation.Extensions
         };
       });
     }
+
   }
 }

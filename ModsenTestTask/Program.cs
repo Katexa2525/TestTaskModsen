@@ -1,7 +1,9 @@
 using Application.Interfaces;
+using MediatR;
 using Microsoft.AspNetCore.HttpOverrides;
 using NLog;
 using Presentation.Extensions;
+using System.Reflection;
 
 string? pathDirectoryName =Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
 _ = LogManager.Setup().LoadConfigurationFromFile(string.Concat(pathDirectoryName, "/Nlog.config"));
@@ -24,6 +26,9 @@ try
   builder.Services.AddAuthentication();
   builder.Services.ConfigureIdentity();
   builder.Services.ConfigureJWT(builder.Configuration);
+
+  //builder.Services.AddValidatorsFromAssembly(typeof(Application.AssemblyReference).Assembly);
+  builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Application.AssemblyReference).Assembly));
 
   builder.Services.AddControllers();
   // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

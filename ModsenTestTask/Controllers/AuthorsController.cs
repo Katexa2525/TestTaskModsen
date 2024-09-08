@@ -1,5 +1,8 @@
-﻿using Application.Interfaces.Services;
+﻿using Application.Commands;
+using Application.Interfaces.Services;
+using Application.Quaries;
 using Domain.Entities.DTO;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers
@@ -8,31 +11,34 @@ namespace Presentation.Controllers
   [ApiController]
   public class AuthorsController : ControllerBase
   {
-    private readonly IServiceManager _service;
+    //private readonly IServiceManager _service;
 
-    public AuthorsController(IServiceManager service)
-    {
-      _service = service;
-    }
+    private readonly ISender _sender;
+    public AuthorsController(ISender sender) => _sender = sender;
+
+    //public AuthorsController(IServiceManager service)
+    //{
+    //  _service = service;
+    //}
 
     [HttpGet]
     public async Task<IActionResult> GetAuthors() 
     {
-      var authors = await _service.AuthorService.GetAllAuthorsAsync(trackChanges:false);
+      var authors = await _sender.Send(new GetAuthorsQuery(TrackChanges: false));
       return Ok(authors);
     }
 
     [HttpGet("{id:Guid}", Name = "GetAuthorById")]
     public async Task<IActionResult> GetAuthorById(Guid id) 
     {
-      var author = await _service.AuthorService.GetAuthorAsync(id, trackChanges: false);
+      var author = await _sender.Send(new GetAuthorByIdQuery(id, trackChanges: false));
       return Ok(author);
     }
 
     [HttpDelete("{id:Guid}")]
     public async Task<IActionResult> DeleteAuthor(Guid id)
     {
-      await _service.AuthorService.DeleteAuthorAsync(id, trackChanges: false);
+      await _sender.Send(new DeleteAuthorCommand(id, trackChanges: false));
       return NoContent();
     }
 
@@ -41,7 +47,7 @@ namespace Presentation.Controllers
     {
       if (author is null)
         return BadRequest("CreateAuthorDTO object is null");
-      var createdAuthor = await _service.AuthorService.CreateAuthorAsync(author);
+      var createdAuthor = await _sender.Send(new CreateAuthorCommand(author));
       if (createdAuthor is null)
         return BadRequest("AuthorDTO object is null");
       return CreatedAtRoute("GetAuthorById", new { id = createdAuthor.Id },createdAuthor);
@@ -52,7 +58,7 @@ namespace Presentation.Controllers
     {
       if (author is null)
         return BadRequest("UpdateAuthorDTO object is null");
-      await _service.AuthorService.UpdateAuthorAsync(id, author, trackChanges: true);
+      await _sender.Send(new UpdateAuthorCommand(id, author, trackChanges: true));
       return NoContent();
     }
   }
