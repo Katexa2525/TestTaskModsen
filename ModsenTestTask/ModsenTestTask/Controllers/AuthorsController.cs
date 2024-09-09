@@ -1,6 +1,6 @@
-﻿using Application.Commands;
+﻿using Application.UseCases.Commands;
 using Application.Interfaces.Services;
-using Application.Quaries;
+using Application.UseCases.Quaries;
 using Domain.Entities.DTO;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
