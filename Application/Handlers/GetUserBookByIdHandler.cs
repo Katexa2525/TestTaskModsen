@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Application.Handlers
 {
-  internal sealed class GetUserBookByIdHandler : IRequestHandler<GetUserBookByIdQuery, IEnumerable<UserBookDTO>>
+  internal sealed class GetUserBookByIdHandler : IRequestHandler<GetUserBookByIdQuery, UserBookDTO>
   {
     private readonly IRepositoryManager _repository;
     private User? _user;
@@ -19,7 +19,7 @@ namespace Application.Handlers
       _repository = repository;
       _userManager = userManager;
     }
-    public async Task<IEnumerable<UserBookDTO>> Handle(GetUserBookByIdQuery request, CancellationToken cancellationToken)
+    public async Task<UserBookDTO> Handle(GetUserBookByIdQuery request, CancellationToken cancellationToken)
     {
       _user = await _userManager.FindByNameAsync(request.userName);
       if (_user != null)
@@ -28,7 +28,7 @@ namespace Application.Handlers
         if (userBook is null)
           throw new UserBookNotFoundException(request.bookId);
 
-        return (IEnumerable<UserBookDTO>)userBook.ToUserBookResponse();
+        return userBook.ToUserBookResponse();
       }
       return null;
     }

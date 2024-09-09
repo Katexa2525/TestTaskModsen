@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Application.Handlers
 {
-  internal sealed class GetBooksByAuthorHandler : IRequestHandler<GetBooksByAuthorQuery, BookDTO>
+  internal sealed class GetBooksByAuthorHandler : IRequestHandler<GetBooksByAuthorQuery, IEnumerable<BookDTO>>
   {
     private readonly IRepositoryManager _repository;
 
@@ -21,14 +21,14 @@ namespace Application.Handlers
     {
       _repository = repository;
     }
-    public async Task<BookDTO> Handle(GetBooksByAuthorQuery request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<BookDTO>> Handle(GetBooksByAuthorQuery request, CancellationToken cancellationToken)
     {
       var author = await _repository.Author.GetAuthorByIdAsync(request.authorId, trackChanges: false);
       if (author == null)
         throw new AuthorNotFoundException(request.authorId);
       var booksFromDB = await _repository.Book.GetBookByAuthorAsync(request.authorId, trackChanges: false);
       IEnumerable<BookDTO> booksDto = booksFromDB.Select(booksFromDB => booksFromDB.ToBookResponse()).ToList();
-      return (BookDTO)booksDto;
+      return booksDto;
     }
   }
 }

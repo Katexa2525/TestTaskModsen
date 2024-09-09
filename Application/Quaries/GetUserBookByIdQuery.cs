@@ -3,5 +3,5 @@ using MediatR;
 
 namespace Application.Quaries
 {
-  public sealed record GetUserBookByIdQuery(Guid bookId, string userName, bool trackChanges) : IRequest<IEnumerable<UserBookDTO>>;
+  public sealed record GetUserBookByIdQuery(Guid bookId, string userName, bool trackChanges) : IRequest<UserBookDTO>;
 }

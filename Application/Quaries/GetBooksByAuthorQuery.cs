@@ -8,5 +8,5 @@ using System.Threading.Tasks;
 
 namespace Application.Quaries
 {
-  public sealed record GetBooksByAuthorQuery(Guid authorId, bool trackChanges) : IRequest<BookDTO>;
+  public sealed record GetBooksByAuthorQuery(Guid authorId, bool trackChanges) : IRequest<IEnumerable<BookDTO>>;
 }

@@ -2,6 +2,7 @@
 using Application.Interfaces.Repository;
 using Application.Mapping;
 using Domain.Entities.Exceptions;
+using Domain.Entities.Validation;
 using MediatR;
 
 namespace Application.Handlers
@@ -17,11 +18,17 @@ namespace Application.Handlers
 
     public async Task<Unit> Handle(UpdateAuthorCommand request, CancellationToken cancellationToken)
     {
+      var validator = new AuthorValidator();
       var authorEntity = await _repository.Author.GetAuthorByIdAsync(request.authorId, request.trackChanges);
       if (authorEntity is null)
         throw new AuthorNotFoundException(request.authorId);
-      authorEntity = AuthorMapping.ToAuthor(request.UpdateAuthor, authorEntity);
-      await _repository.SaveAsync();
+      var validationResult = validator.Validate(authorEntity);
+      if (validationResult.IsValid)
+      {
+        authorEntity = AuthorMapping.ToAuthor(request.UpdateAuthor, authorEntity);
+        await _repository.SaveAsync();
+        return Unit.Value;
+      }
       return Unit.Value;
     }
   }

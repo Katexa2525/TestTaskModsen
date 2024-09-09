@@ -6,6 +6,7 @@ using AutoMapper;
 using Domain.Entities.DTO;
 using Domain.Entities.Exceptions;
 using Domain.Entities.Models;
+using Domain.Entities.Validation;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -26,17 +27,22 @@ namespace Application.Handlers
     }
     public async Task<BookDTO> Handle(CreateBookCommand request, CancellationToken cancellationToken)
     {
+      var validator = new BookValidator();
       var author = await _repository.Author.GetAuthorByIdAsync(request.authorId, request.trackChanges);
       if (author is null)
         throw new AuthorNotFoundException(request.authorId);
       Book bookEntity = BookMapping.ToBook(request.Book);
 
       bookEntity.Image = ImageService.LoadImage(request.Book.Image);
-
-      _repository.Book.CreateBook(request.authorId, bookEntity);
-      await _repository.SaveAsync();
-      BookDTO bookToReturn = BookMapping.ToBookResponse(bookEntity);
-      return bookToReturn;
+      var validationResult = validator.Validate(bookEntity);
+      if (validationResult.IsValid)
+      {
+        _repository.Book.CreateBook(request.authorId, bookEntity);
+        await _repository.SaveAsync();
+        BookDTO bookToReturn = BookMapping.ToBookResponse(bookEntity);
+        return bookToReturn;
+      }
+      return null;
     }
   }
 }

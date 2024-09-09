@@ -3,6 +3,7 @@ using Application.Interfaces.Repository;
 using Application.Mapping;
 using Application.Services;
 using Domain.Entities.Exceptions;
+using Domain.Entities.Validation;
 using MediatR;
 
 namespace Application.Handlers
@@ -16,6 +17,7 @@ namespace Application.Handlers
     }
     public async Task<Unit> Handle(UpdateBookCommand request, CancellationToken cancellationToken)
     {
+      var validator = new BookValidator();
       var author = await _repository.Author.GetAuthorByIdAsync(request.authorId, request.authTrackChanges);
       if (author is null)
         throw new AuthorNotFoundException(request.authorId);
@@ -23,10 +25,15 @@ namespace Application.Handlers
       if (bookEntity is null)
         throw new BookNotFoundException(request.id);
 
-      bookEntity = BookMapping.ToBook(request.bookUpdate, bookEntity);
+      var validationResult = validator.Validate(bookEntity);
+      if (validationResult.IsValid)
+      {
+        bookEntity = BookMapping.ToBook(request.bookUpdate, bookEntity);
 
-      bookEntity.Image = ImageService.LoadImage(request.bookUpdate.Image);
-      await _repository.SaveAsync();
+        bookEntity.Image = ImageService.LoadImage(request.bookUpdate.Image);
+        await _repository.SaveAsync();
+        return Unit.Value;
+      }
       return Unit.Value;
     }
   }
