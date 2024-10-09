@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Application.UseCases.Handlers
 {
-    internal sealed class GetBookByISBNHandler : IRequestHandler<GetBookByISBNQuery, BookDTO>
+    public sealed class GetBookByISBNHandler : IRequestHandler<GetBookByISBNQuery, BookDTO>
     {
         private readonly IRepositoryManager _repository;
 

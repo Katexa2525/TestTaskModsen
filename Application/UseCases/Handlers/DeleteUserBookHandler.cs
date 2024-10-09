@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Application.UseCases.Handlers
 {
-    internal sealed class DeleteUserBookHandler : IRequestHandler<DeleteUserBookCommand, Unit>
+    public sealed class DeleteUserBookHandler : IRequestHandler<DeleteUserBookCommand, Unit>
     {
         private readonly IRepositoryManager _repository;
         private readonly UserManager<User> _userManager;

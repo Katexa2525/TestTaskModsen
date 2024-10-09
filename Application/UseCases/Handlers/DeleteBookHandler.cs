@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.UseCases.Handlers
 {
-    internal sealed class DeleteBookHandler : IRequestHandler<DeleteBookCommand, Unit>
+    public sealed class DeleteBookHandler : IRequestHandler<DeleteBookCommand, Unit>
     {
         private readonly IRepositoryManager _repository;
         public DeleteBookHandler(IRepositoryManager repository) => _repository = repository;

@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Application.UseCases.Handlers
 {
-    internal sealed class CreateUserBookHandler : IRequestHandler<CreateUserBookCommand, UserBookDTO>
+    public sealed class CreateUserBookHandler : IRequestHandler<CreateUserBookCommand, UserBookDTO>
     {
         private readonly IRepositoryManager _repository;
         private readonly UserManager<User> _userManager;

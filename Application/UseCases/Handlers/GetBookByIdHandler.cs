@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Application.UseCases.Handlers
 {
-    internal sealed class GetBookByIdHandler : IRequestHandler<GetBookByIdQuery, BookDTO>
+    public sealed class GetBookByIdHandler : IRequestHandler<GetBookByIdQuery, BookDTO>
     {
         private readonly IRepositoryManager _repository;
 

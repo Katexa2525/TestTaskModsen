@@ -8,7 +8,7 @@ using MediatR;
 
 namespace Application.UseCases.Handlers
 {
-    internal sealed class CreateAuthorHandler : IRequestHandler<CreateAuthorCommand, AuthorDTO>
+    public sealed class CreateAuthorHandler : IRequestHandler<CreateAuthorCommand, AuthorDTO>
     {
         private readonly IRepositoryManager _repository;
 

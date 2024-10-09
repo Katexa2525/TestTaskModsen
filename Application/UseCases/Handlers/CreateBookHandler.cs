@@ -18,7 +18,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Application.UseCases.Handlers
 {
-    internal sealed class CreateBookHandler : IRequestHandler<CreateBookCommand, BookDTO>
+    public sealed class CreateBookHandler : IRequestHandler<CreateBookCommand, BookDTO>
     {
         private readonly IRepositoryManager _repository;
         public CreateBookHandler(IRepositoryManager repository)
