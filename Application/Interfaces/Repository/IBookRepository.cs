@@ -1,5 +1,5 @@
 ﻿using Domain.Entities.Models;
-using Domain.RequestFeatures;
+using Application.RequestFeatures;
 
 namespace Application.Interfaces.Repository
 {

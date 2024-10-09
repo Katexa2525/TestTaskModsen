@@ -1,7 +1,7 @@
 ﻿using Application.Interfaces.Repository;
 using Application.Mapping;
 using Application.UseCases.Commands;
-using Domain.Entities.Exceptions;
+using Application.Exceptions;
 using Domain.Entities.Validation;
 using MediatR;
 

@@ -2,7 +2,7 @@
 using Application.Mapping;
 using Application.UseCases.Quaries;
 using Domain.Entities.DTO;
-using Domain.RequestFeatures;
+using Application.RequestFeatures;
 using MediatR;
 
 namespace Application.UseCases.Handlers

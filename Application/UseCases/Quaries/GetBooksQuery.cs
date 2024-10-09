@@ -1,5 +1,5 @@
 ﻿using Domain.Entities.DTO;
-using Domain.RequestFeatures;
+using Application.RequestFeatures;
 using MediatR;
 
 namespace Application.UseCases.Quaries

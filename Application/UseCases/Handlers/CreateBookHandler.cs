@@ -4,7 +4,7 @@ using Application.Services;
 using Application.UseCases.Commands;
 using AutoMapper;
 using Domain.Entities.DTO;
-using Domain.Entities.Exceptions;
+using Application.Exceptions;
 using Domain.Entities.Models;
 using Domain.Entities.Validation;
 using MediatR;

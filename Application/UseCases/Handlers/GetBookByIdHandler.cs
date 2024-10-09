@@ -3,7 +3,7 @@ using Application.Mapping;
 using Application.UseCases.Quaries;
 using AutoMapper;
 using Domain.Entities.DTO;
-using Domain.Entities.Exceptions;
+using Application.Exceptions;
 using Domain.Entities.Models;
 using MediatR;
 using System;

@@ -2,7 +2,7 @@
 using Application.Interfaces.Services;
 using Application.UseCases.Quaries;
 using Domain.Entities.DTO;
-using Domain.RequestFeatures;
+using Application.RequestFeatures;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;

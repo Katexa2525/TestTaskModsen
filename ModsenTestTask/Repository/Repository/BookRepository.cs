@@ -1,7 +1,7 @@
 ﻿using Application.Interfaces.Repository;
 using Domain.Entities;
 using Domain.Entities.Models;
-using Domain.RequestFeatures;
+using Application.RequestFeatures;
 using Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 
