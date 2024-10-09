@@ -6,6 +6,7 @@ using Domain.Entities.DTO;
 using Domain.Entities.Exceptions;
 using Domain.Entities.Models;
 using Domain.Entities.Validation;
+using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -34,13 +35,13 @@ namespace Application.UseCases.Handlers
             {
                 request.createUserBook.UserName = _user.Id;
                 var validator = new UserBookValidation();
-                UserBook userBook = request.createUserBook.ToUserBook();
+                UserBook userBook = request.createUserBook.Adapt<UserBook>();
                 var validationResult = validator.Validate(userBook);
                 if (validationResult.IsValid)
                 {
                     _repository.UserBook.PostBookToUserAsync(userBook);
                     await _repository.SaveAsync();
-                    UserBookDTO userBookDTO = userBook.ToUserBookResponse();
+                    UserBookDTO userBookDTO = userBook.Adapt<UserBookDTO>();
                     return userBookDTO;
                 }
             }

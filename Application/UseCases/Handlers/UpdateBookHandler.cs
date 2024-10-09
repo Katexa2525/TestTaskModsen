@@ -3,7 +3,9 @@ using Application.Mapping;
 using Application.Services;
 using Application.UseCases.Commands;
 using Domain.Entities.Exceptions;
+using Domain.Entities.Models;
 using Domain.Entities.Validation;
+using Mapster;
 using MediatR;
 
 namespace Application.UseCases.Handlers
@@ -28,7 +30,7 @@ namespace Application.UseCases.Handlers
             var validationResult = validator.Validate(bookEntity);
             if (validationResult.IsValid)
             {
-                bookEntity = request.bookUpdate.ToBook(bookEntity);
+                bookEntity = request.bookUpdate.Adapt<Book>();
 
                 bookEntity.Image = ImageService.LoadImage(request.bookUpdate.Image);
                 await _repository.SaveAsync();
