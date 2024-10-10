@@ -30,7 +30,7 @@ namespace Application.UseCases.Handlers
             var validationResult = validator.Validate(bookEntity);
             if (validationResult.IsValid)
             {
-                bookEntity = request.bookUpdate.Adapt<Book>();
+                request.bookUpdate.Adapt(bookEntity);
 
                 bookEntity.Image = ImageService.LoadImage(request.bookUpdate.Image);
                 await _repository.SaveAsync();

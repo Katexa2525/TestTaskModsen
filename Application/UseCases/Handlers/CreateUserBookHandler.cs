@@ -1,23 +1,15 @@
 ﻿using Application.Interfaces.Repository;
-using Application.Mapping;
-using Application.Services;
 using Application.UseCases.Commands;
 using Domain.Entities.DTO;
-using Domain.Entities.Exceptions;
 using Domain.Entities.Models;
 using Domain.Entities.Validation;
 using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.UseCases.Handlers
 {
-    internal sealed class CreateUserBookHandler : IRequestHandler<CreateUserBookCommand, UserBookDTO>
+  internal sealed class CreateUserBookHandler : IRequestHandler<CreateUserBookCommand, UserBookDTO>
     {
         private readonly IRepositoryManager _repository;
         private readonly UserManager<User> _userManager;
