@@ -45,19 +45,13 @@ namespace Presentation.Controllers
     [HttpPost]
     public async Task<IActionResult> CreateAuthor([FromBody] CreateAuthorDTO author)
     {
-      if (author is null)
-        return BadRequest("CreateAuthorDTO object is null");
       var createdAuthor = await _sender.Send(new CreateAuthorCommand(author));
-      if (createdAuthor is null)
-        return BadRequest("AuthorDTO object is null");
       return CreatedAtRoute("GetAuthorById", new { id = createdAuthor.Id },createdAuthor);
     }
 
     [HttpPut("{id:Guid}")]
     public async Task<IActionResult> UpdateAuthor(Guid id, [FromBody] UpdateAuthorDTO author)
     {
-      if (author is null)
-        return BadRequest("UpdateAuthorDTO object is null");
       await _sender.Send(new UpdateAuthorCommand(id, author, trackChanges: true));
       return NoContent();
     }

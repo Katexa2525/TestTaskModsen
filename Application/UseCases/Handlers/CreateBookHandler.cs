@@ -42,7 +42,7 @@ namespace Application.UseCases.Handlers
                 BookDTO bookToReturn = bookEntity.ToBookResponse();
                 return bookToReturn;
             }
-            return null;
+            return new BookDTO();
         }
     }
 }

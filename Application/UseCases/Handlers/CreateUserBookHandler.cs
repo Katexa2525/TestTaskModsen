@@ -44,7 +44,7 @@ namespace Application.UseCases.Handlers
                     return userBookDTO;
                 }
             }
-            return null;
+            return new UserBookDTO();
         }
     }
 }

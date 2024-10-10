@@ -17,11 +17,7 @@ namespace Presentation.Controllers
     [HttpPost]
     public async Task<IActionResult> CrateUserBook([FromBody] CreateUserBookDTO userBook)
     {
-      if (userBook is null)
-        return BadRequest("UserBookDTO object is null");
       var userBookToReturn = await _sender.Send(new CreateUserBookCommand(userBook, trackChanges: false));
-      if (userBookToReturn is null)
-        return BadRequest("bookToReturn object is null");
       return Ok(userBookToReturn);
     }
 

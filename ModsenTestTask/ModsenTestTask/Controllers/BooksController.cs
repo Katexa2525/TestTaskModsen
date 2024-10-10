@@ -21,8 +21,6 @@ namespace Presentation.Controllers
     public async Task<ActionResult> GetAllBooks([FromQuery] BookParameters bookParameters)
     {
       var pagedResult = await _sender.Send(new GetBooksQuery(bookParameters, trackChanges: false));
-      if (pagedResult.metaData is null)
-        return BadRequest("pagedResultMeta object is null");
       Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
       return Ok(pagedResult.books);
     }
@@ -58,11 +56,7 @@ namespace Presentation.Controllers
     [HttpPost("{authorId:Guid}")]
     public async Task<IActionResult> CreateBook(Guid authorId, [FromForm]CreateUpdateBookDTO book)
     {
-      if (book is null)
-        return BadRequest("CreateBookDTO object is null");
       var bookToReturn = await _sender.Send(new CreateBookCommand(authorId, book, trackChanges: false));
-      if(bookToReturn is null)
-        return BadRequest("bookToReturn object is null");
       return CreatedAtRoute("GetBookById", new
       {
         authorId,
@@ -74,8 +68,6 @@ namespace Presentation.Controllers
     [HttpPut("{authorId:Guid}/{id:Guid}")]
     public async Task<IActionResult> UpdateBook(Guid authorId, Guid id, [FromForm] CreateUpdateBookDTO book)
     {
-      if (book is null)
-        return BadRequest("CreateUpdateBookDTO object is null");
       await _sender.Send(new UpdateBookCommand(authorId, id, book, authTrackChanges: false, bookTrackChanges: true));
       return NoContent();
     }

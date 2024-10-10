@@ -26,7 +26,7 @@ namespace Application.UseCases.Handlers
                 AuthorDTO authorToReturn = authorEntity.ToAuthorResponse();
                 return authorToReturn;
             }
-            return null;
+            return new AuthorDTO();
         }
     }
 }

@@ -4,15 +4,15 @@ namespace Domain.Entities.Models
 {
     public class UserBook
     {
-        [Column("UserBookId")]
+        //[Column("UserBookId")]
         public Guid Id { get; set; }
 
-        [ForeignKey(nameof(Book))]
+        //[ForeignKey(nameof(Book))]
         public Guid IdBook { get; set; }
-        public Book Book { get; set; }
+        //public Book Book { get; set; }
 
-        [ForeignKey(nameof(User))]
+        //[ForeignKey(nameof(User))]
         public string IdUser { get; set; }
-        public User? User { get; set; }
+        //public User? User { get; set; }
     }
 }
