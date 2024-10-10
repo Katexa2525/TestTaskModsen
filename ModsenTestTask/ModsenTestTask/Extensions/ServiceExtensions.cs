@@ -3,11 +3,11 @@ using Application.Interfaces.Repository;
 using Application.Interfaces.Services;
 using Application.Services;
 using Domain.Entities.Models;
+using Domain.Entities.Validation;
+using FluentValidation;
 using Infrastructure;
 using Infrastructure.Logger;
 using Infrastructure.Repository;
-using MediatR;
-using MediatR.NotificationPublishers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -26,7 +26,7 @@ namespace Presentation.Extensions
       .AllowAnyMethod()
       .AllowAnyHeader()
       .WithExposedHeaders("X-Pagination"));
-  });
+    });
 
     public static void ConfigureLoggerService(this IServiceCollection services) =>
                             services.AddSingleton<ILoggerManager, LoggerManager>();
@@ -77,6 +77,14 @@ namespace Presentation.Extensions
           IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
         };
       });
+    }
+
+    public static void ConfigureValidator(this IServiceCollection services)
+    {
+      //services.AddFluentValidationAutoValidation();
+      services.AddScoped<IValidator<Book>, BookValidator>();
+      services.AddScoped<IValidator<Author>, AuthorValidator>();
+      services.AddScoped<IValidator<UserBook>, UserBookValidation>();
     }
 
   }

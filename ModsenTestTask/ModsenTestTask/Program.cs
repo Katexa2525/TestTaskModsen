@@ -26,6 +26,7 @@ try
   builder.Services.AddAuthentication();
   builder.Services.ConfigureIdentity();
   builder.Services.ConfigureJWT(builder.Configuration);
+  builder.Services.ConfigureValidator();
 
   //builder.Services.AddValidatorsFromAssembly(typeof(Application.AssemblyReference).Assembly);
   builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Application.AssemblyReference).Assembly));
