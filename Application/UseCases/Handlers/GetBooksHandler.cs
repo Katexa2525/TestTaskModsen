@@ -8,7 +8,7 @@ using MediatR;
 
 namespace Application.UseCases.Handlers
 {
-    internal sealed class GetBooksHandler : IRequestHandler<GetBooksQuery, (IEnumerable<BookDTO> books, MetaData metaData)>
+    public sealed class GetBooksHandler : IRequestHandler<GetBooksQuery, (IEnumerable<BookDTO> books, MetaData metaData)>
     {
         private readonly IRepositoryManager _repository;
         public GetBooksHandler(IRepositoryManager repository) => _repository = repository;

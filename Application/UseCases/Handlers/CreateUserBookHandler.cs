@@ -11,11 +11,11 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Application.UseCases.Handlers
 {
-  internal sealed class CreateUserBookHandler : IRequestHandler<CreateUserBookCommand, UserBookDTO>
-  {
-    private readonly IRepositoryManager _repository;
-    private readonly UserManager<User> _userManager;
-    private User? _user;
+    public sealed class CreateUserBookHandler : IRequestHandler<CreateUserBookCommand, UserBookDTO>
+    {
+        private readonly IRepositoryManager _repository;
+        private readonly UserManager<User> _userManager;
+        private User? _user;
 
     public CreateUserBookHandler(IRepositoryManager repository, UserManager<User> userManager)
     {

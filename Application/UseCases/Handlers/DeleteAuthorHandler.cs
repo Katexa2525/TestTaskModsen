@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Application.UseCases.Handlers
 {
-    internal sealed class DeleteAuthorHandler : IRequestHandler<DeleteAuthorCommand, Unit>
+    public sealed class DeleteAuthorHandler : IRequestHandler<DeleteAuthorCommand, Unit>
     {
         private readonly IRepositoryManager _repository;
         public DeleteAuthorHandler(IRepositoryManager repository) => _repository = repository;

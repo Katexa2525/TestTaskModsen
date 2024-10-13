@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Application.UseCases.Handlers
 {
-    internal sealed class GetAuthorByIdHandler : IRequestHandler<GetAuthorByIdQuery, AuthorDTO>
+    public sealed class GetAuthorByIdHandler : IRequestHandler<GetAuthorByIdQuery, AuthorDTO>
     {
         private readonly IRepositoryManager _repository;
         public GetAuthorByIdHandler(IRepositoryManager repository)

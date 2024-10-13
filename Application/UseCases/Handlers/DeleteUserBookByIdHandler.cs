@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Application.UseCases.Handlers
 {
-    internal sealed class DeleteUserBookByIdHandler : IRequestHandler<DeleteUserBookByIdCommand, Unit>
+    public sealed class DeleteUserBookByIdHandler : IRequestHandler<DeleteUserBookByIdCommand, Unit>
     {
         private readonly IRepositoryManager _repository;
         public DeleteUserBookByIdHandler(IRepositoryManager repository)

@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Application.UseCases.Handlers
 {
-    internal sealed class GetAuthorsHandler : IRequestHandler<GetAuthorsQuery, IEnumerable<AuthorDTO>>
+    public sealed class GetAuthorsHandler : IRequestHandler<GetAuthorsQuery, IEnumerable<AuthorDTO>>
     {
         private readonly IRepositoryManager _repository;
         public GetAuthorsHandler(IRepositoryManager repository) => _repository = repository;
