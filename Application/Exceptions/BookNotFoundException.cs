@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Entities.Exceptions
+namespace Application.Exceptions
 {
     public sealed class BookNotFoundException : NotFoundException
     {

@@ -1,6 +1,9 @@
 ﻿using Application.Interfaces;
-using Domain.Entities.ErrorModel;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using System.Net;
+using System.Text.Json;
 
 namespace Presentation.Extensions
 {
@@ -32,11 +35,12 @@ namespace Presentation.Extensions
       context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
       context.Response.ContentType = "application/json";
       logger.LogError($"Something went wrong: {ex.StackTrace}");
-      await context.Response.WriteAsync(new ErrorDetails()
-      {
-        StatusCode = context.Response.StatusCode,
-        Message = ex.Message,
-      }.ToString());
+      await context.Response.WriteAsync(JsonSerializer.Serialize(
+        new ProblemDetails()
+        {
+          Status = context.Response.StatusCode,
+          Title = !string.IsNullOrEmpty(ex.Message) ? ex.Message : string.Empty
+        }).ToString());
     }
   }
 }

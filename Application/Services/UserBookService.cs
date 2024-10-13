@@ -4,7 +4,7 @@ using Application.Interfaces.Services;
 using Application.Mapping;
 using AutoMapper;
 using Domain.Entities.DTO;
-using Domain.Entities.Exceptions;
+using Application.Exceptions;
 using Domain.Entities.Models;
 using Domain.Entities.Validation;
 using Microsoft.AspNetCore.Identity;
@@ -30,10 +30,10 @@ namespace Application.Services
     }
     public async Task<UserBookDTO> CreateUserBookAsync(CreateUserBookDTO createUserBook, bool trackChanges)
     {
-      _user = await _userManager.FindByNameAsync(createUserBook.UserName);
+      _user = await _userManager.FindByNameAsync(createUserBook.IdUser);
       if (_user != null)
       {
-        createUserBook.UserName = _user.Id;
+        createUserBook.IdUser = _user.Id;
         var validator = new UserBookValidation();
         UserBook userBook = UserBookMapping.ToUserBook(createUserBook);
         var validationResult = validator.Validate(userBook);

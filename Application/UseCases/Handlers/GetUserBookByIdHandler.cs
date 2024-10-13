@@ -2,8 +2,9 @@
 using Application.Mapping;
 using Application.UseCases.Quaries;
 using Domain.Entities.DTO;
-using Domain.Entities.Exceptions;
+using Application.Exceptions;
 using Domain.Entities.Models;
+using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
@@ -28,7 +29,7 @@ namespace Application.UseCases.Handlers
                 if (userBook is null)
                     throw new UserBookNotFoundException(request.bookId);
 
-                return userBook.ToUserBookResponse();
+                return userBook.Adapt<UserBookDTO>();
             }
             return null;
         }

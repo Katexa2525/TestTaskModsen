@@ -2,7 +2,8 @@
 using Application.Mapping;
 using Application.UseCases.Quaries;
 using Domain.Entities.DTO;
-using Domain.RequestFeatures;
+using Mapster;
+using Application.RequestFeatures;
 using MediatR;
 
 namespace Application.UseCases.Handlers
@@ -14,7 +15,7 @@ namespace Application.UseCases.Handlers
         public async Task<(IEnumerable<BookDTO> books, MetaData metaData)> Handle(GetBooksQuery request, CancellationToken cancellationToken)
         {
             var booksWithMetaData = await _repository.Book.GetAllBooksAsync(request.bookParameters, request.trackChanges);
-            IEnumerable<BookDTO> booksDTO = booksWithMetaData.Select(booksWithMetaData => booksWithMetaData.ToBookResponse());
+            IEnumerable<BookDTO> booksDTO = booksWithMetaData.Select(booksWithMetaData => booksWithMetaData.Adapt<BookDTO>());
             return (books: booksDTO, metaData: booksWithMetaData.MetaData);
         }
     }

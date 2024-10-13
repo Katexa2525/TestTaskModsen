@@ -1,6 +1,6 @@
 ﻿using Application.Interfaces.Repository;
 using Application.UseCases.Commands;
-using Domain.Entities.Exceptions;
+using Application.Exceptions;
 using Domain.Entities.Models;
 using MediatR;
 using System;

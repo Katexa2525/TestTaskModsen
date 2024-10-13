@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities.Models
 {
-    public class Book
+  public class Book
     {
-        [Column("BookId")]
+        //[Column("BookId")]
         public Guid Id { get; set; }
         public string ISBN { get; set; }
         public string Name { get; set; }
@@ -19,9 +13,9 @@ namespace Domain.Entities.Models
         public DateTime TakeTime { get; set; }
         public DateTime ReturnTime { get; set; }
 
-        [ForeignKey(nameof(Author))]
+        //[ForeignKey(nameof(Author))]
         public Guid IdAuthor { get; set; }
-        public Author? Author { get; set; }
+        //public Author? Author { get; set; }
 
         public ICollection<UserBook>? UserBooks { get; set; }
     }

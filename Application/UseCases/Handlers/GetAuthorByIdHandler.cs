@@ -3,7 +3,8 @@ using Application.Mapping;
 using Application.UseCases.Quaries;
 using AutoMapper;
 using Domain.Entities.DTO;
-using Domain.Entities.Exceptions;
+using Mapster;
+using Application.Exceptions;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace Application.UseCases.Handlers
             var author = await _repository.Author.GetAuthorByIdAsync(request.Id, request.trackChanges);
             if (author is null)
                 throw new AuthorNotFoundException(request.Id);
-            return author.ToAuthorResponse();
+            return author.Adapt<AuthorDTO>();
         }
     }
 }

@@ -3,8 +3,9 @@ using Application.Mapping;
 using Application.UseCases.Quaries;
 using AutoMapper;
 using Domain.Entities.DTO;
-using Domain.Entities.Exceptions;
+using Application.Exceptions;
 using Domain.Entities.Models;
+using Mapster;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ namespace Application.UseCases.Handlers
             var book = await _repository.Book.GetBookByIdAsync(request.authorId, request.Id, request.trackChanges);
             if (book is null)
                 throw new BookNotFoundException(request.Id);
-            return book.ToBookResponse();
+            return book.Adapt<BookDTO>();
         }
     }
 }

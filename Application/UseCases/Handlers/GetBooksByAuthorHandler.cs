@@ -2,8 +2,9 @@
 using Application.Mapping;
 using Application.UseCases.Quaries;
 using Domain.Entities.DTO;
-using Domain.Entities.Exceptions;
+using Application.Exceptions;
 using Domain.Entities.Models;
+using Mapster;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace Application.UseCases.Handlers
             if (author == null)
                 throw new AuthorNotFoundException(request.authorId);
             var booksFromDB = await _repository.Book.GetBookByAuthorAsync(request.authorId, trackChanges: false);
-            IEnumerable<BookDTO> booksDto = booksFromDB.Select(booksFromDB => booksFromDB.ToBookResponse()).ToList();
+            IEnumerable<BookDTO> booksDto = booksFromDB.Select(booksFromDB => booksFromDB.Adapt<BookDTO>()).ToList();
             return booksDto;
         }
     }

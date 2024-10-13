@@ -4,6 +4,7 @@ using Application.UseCases.Commands;
 using Domain.Entities.DTO;
 using Domain.Entities.Models;
 using Domain.Entities.Validation;
+using Mapster;
 using MediatR;
 
 namespace Application.UseCases.Handlers
@@ -16,17 +17,18 @@ namespace Application.UseCases.Handlers
 
         public async Task<AuthorDTO> Handle(CreateAuthorCommand request, CancellationToken cancellationToken)
         {
-            var validator = new AuthorValidator();
+
+            //var validator = new AuthorValidator();
             Author authorEntity = request.Author.ToAuthor();
-            var validationResult = validator.Validate(authorEntity);
-            if (validationResult.IsValid)
-            {
+            //var validationResult = validator.Validate(authorEntity);
+            //if (validationResult.IsValid)
+            //{
                 _repository.Author.CreateAuthor(authorEntity);
                 await _repository.SaveAsync();
-                AuthorDTO authorToReturn = authorEntity.ToAuthorResponse();
+                AuthorDTO authorToReturn = authorEntity.Adapt<AuthorDTO>();
                 return authorToReturn;
-            }
-            return null;
+            //}
+            //return new AuthorDTO();
         }
     }
 }
