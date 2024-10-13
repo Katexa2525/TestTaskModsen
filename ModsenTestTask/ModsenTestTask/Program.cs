@@ -1,4 +1,5 @@
 using Application.Interfaces;
+using Application.Mapping;
 using MediatR;
 using Microsoft.AspNetCore.HttpOverrides;
 using NLog;
@@ -27,6 +28,9 @@ try
   builder.Services.ConfigureIdentity();
   builder.Services.ConfigureJWT(builder.Configuration);
   builder.Services.ConfigureValidator();
+
+ 
+  builder.Services.AddSingleton<MapsterUserBookConfig>();
 
   //builder.Services.AddValidatorsFromAssembly(typeof(Application.AssemblyReference).Assembly);
   builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Application.AssemblyReference).Assembly));

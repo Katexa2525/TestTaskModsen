@@ -2,8 +2,10 @@
 using Application.Mapping;
 using Application.Services;
 using Application.UseCases.Commands;
+using Domain.Entities.Models;
 using Application.Exceptions;
 using Domain.Entities.Validation;
+using Mapster;
 using MediatR;
 
 namespace Application.UseCases.Handlers
@@ -24,12 +26,10 @@ namespace Application.UseCases.Handlers
             var bookEntity = await _repository.Book.GetBookByIdAsync(request.authorId, request.id, request.bookTrackChanges);
             if (bookEntity is null)
                 throw new BookNotFoundException(request.id);
-
             //var validationResult = validator.Validate(bookEntity);
             //if (validationResult.IsValid)
             //{
-                bookEntity = request.bookUpdate.ToBook(bookEntity);
-
+                request.bookUpdate.Adapt(bookEntity);
                 bookEntity.Image = ImageService.LoadImage(request.bookUpdate.Image);
                 await _repository.SaveAsync();
                 return Unit.Value;

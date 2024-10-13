@@ -1,13 +1,13 @@
 ﻿using Application.Interfaces.Repository;
-using Application.Mapping;
 using Application.UseCases.Commands;
 using Application.Exceptions;
 using Domain.Entities.Validation;
+using Mapster;
 using MediatR;
 
 namespace Application.UseCases.Handlers
 {
-    internal sealed class UpdateAuthorHandler : IRequestHandler<UpdateAuthorCommand, Unit>
+  internal sealed class UpdateAuthorHandler : IRequestHandler<UpdateAuthorCommand, Unit>
     {
         private readonly IRepositoryManager _repository;
 
@@ -25,7 +25,7 @@ namespace Application.UseCases.Handlers
             //var validationResult = validator.Validate(authorEntity);
             //if (validationResult.IsValid)
             //{
-                authorEntity = request.UpdateAuthor.ToAuthor(authorEntity);
+                request.UpdateAuthor.Adapt(authorEntity);
                 await _repository.SaveAsync();
                 return Unit.Value;
             //}

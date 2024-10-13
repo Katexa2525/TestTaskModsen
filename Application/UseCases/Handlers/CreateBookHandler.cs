@@ -2,23 +2,19 @@
 using Application.Mapping;
 using Application.Services;
 using Application.UseCases.Commands;
-using AutoMapper;
 using Domain.Entities.DTO;
 using Application.Exceptions;
 using Domain.Entities.Models;
 using Domain.Entities.Validation;
+using Mapster;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Application.UseCases.Handlers
 {
-    internal sealed class CreateBookHandler : IRequestHandler<CreateBookCommand, BookDTO>
+  internal sealed class CreateBookHandler : IRequestHandler<CreateBookCommand, BookDTO>
+  {
+    private readonly IRepositoryManager _repository;
+    public CreateBookHandler(IRepositoryManager repository)
     {
         private readonly IRepositoryManager _repository;
         public CreateBookHandler(IRepositoryManager repository)
@@ -31,7 +27,11 @@ namespace Application.UseCases.Handlers
             var author = await _repository.Author.GetAuthorByIdAsync(request.authorId, request.trackChanges);
             if (author is null)
                 throw new AuthorNotFoundException(request.authorId);
-            Book bookEntity = request.Book.ToBook();
+            TypeAdapterConfig<CreateUpdateBookDTO, Book>
+        .NewConfig()
+        .Ignore(dest => dest.Image);
+
+      Book bookEntity = request.Book.Adapt<Book>();
 
             bookEntity.Image = ImageService.LoadImage(request.Book.Image);
             //var validationResult = validator.Validate(bookEntity);
@@ -39,10 +39,11 @@ namespace Application.UseCases.Handlers
             //{
                 _repository.Book.CreateBook(request.authorId, bookEntity);
                 await _repository.SaveAsync();
-                BookDTO bookToReturn = bookEntity.ToBookResponse();
+                BookDTO bookToReturn = bookEntity.Adapt<BookDTO>();
                 return bookToReturn;
             //}
             //return new BookDTO();
         }
     }
+  }
 }
