@@ -2,7 +2,7 @@
 using Application.UseCases.Commands;
 using Application.UseCases.Handlers;
 using Domain.Entities.DTO;
-using Domain.Entities.Exceptions;
+using Application.Exceptions;
 using Domain.Entities.Models;
 using Microsoft.AspNetCore.Http;
 using Moq;

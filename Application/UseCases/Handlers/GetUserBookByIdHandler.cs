@@ -31,7 +31,7 @@ namespace Application.UseCases.Handlers
 
                 return userBook.Adapt<UserBookDTO>();
             }
-            return null;
+            return new UserBookDTO();
         }
     }
 }

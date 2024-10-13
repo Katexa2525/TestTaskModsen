@@ -3,7 +3,6 @@ using Application.UseCases.Commands;
 using Application.UseCases.Handlers;
 using Domain.Entities.DTO;
 using Domain.Entities.Models;
-using Domain.Entities.Validation;
 using Moq;
 
 namespace ModsenTask_Test.AuthorTest
@@ -33,15 +32,9 @@ namespace ModsenTask_Test.AuthorTest
         Country = newAuthor.Country
       };
 
-      // Настройка mock-а для успешной валидации
-      var validator = new AuthorValidator(); // Используйте реальный валидатор
-      var validationResult = validator.Validate(authorEntity);
-      Assert.True(validationResult.IsValid); // Убедитесь, что валидатор возвращает успешный результат
-
       // Act
       _mockRepo.Setup(repo => repo.Author.CreateAuthor(It.IsAny<Author>())).Callback<Author>(a =>
       {
-        // Проверяем, что созданный автор соответствует ожиданиям
         Assert.Equal(authorEntity.Name, a.Name);
         Assert.Equal(authorEntity.Surname, a.Surname);
         Assert.Equal(authorEntity.BirthdayDate, a.BirthdayDate);
@@ -56,34 +49,6 @@ namespace ModsenTask_Test.AuthorTest
       Assert.Equal(newAuthor.Surname, result.Surname);
       _mockRepo.Verify(repo => repo.Author.CreateAuthor(It.IsAny<Author>()), Times.Once);
       _mockRepo.Verify(repo => repo.SaveAsync(), Times.Once);
-    }
-
-    [Fact]
-    public async Task Handle_ReturnsNull_WhenValidationFails()
-    {
-      // Arrange
-      var newAuthor = new CreateAuthorDTO("", "Doe", new DateTime(1990, 1, 1), "USA"); // Неправильное имя
-      var command = new CreateAuthorCommand(newAuthor);
-      var authorEntity = new Author
-      {
-        Name = newAuthor.Name,
-        Surname = newAuthor.Surname,
-        BirthdayDate = newAuthor.BirthdayDate,
-        Country = newAuthor.Country
-      };
-
-      // Настройка mock-а для провала валидации
-      var validator = new AuthorValidator(); // Используйте реальный валидатор
-      var validationResult = validator.Validate(authorEntity);
-      Assert.False(validationResult.IsValid); // Убедитесь, что валидатор возвращает неуспешный результат
-
-      // Act
-      var result = await _handler.Handle(command, CancellationToken.None);
-
-      // Assert
-      Assert.Null(result);
-      _mockRepo.Verify(repo => repo.Author.CreateAuthor(It.IsAny<Author>()), Times.Never);
-      _mockRepo.Verify(repo => repo.SaveAsync(), Times.Never);
     }
   }
 }

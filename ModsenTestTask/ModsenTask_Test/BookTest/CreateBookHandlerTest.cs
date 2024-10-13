@@ -2,7 +2,7 @@
 using Application.UseCases.Commands;
 using Application.UseCases.Handlers;
 using Domain.Entities.DTO;
-using Domain.Entities.Exceptions;
+using Application.Exceptions;
 using Domain.Entities.Models;
 using Moq;
 
@@ -26,7 +26,6 @@ namespace ModsenTask_Test.BookTest
       var authorId = Guid.NewGuid();
       var command = new CreateBookCommand(authorId, new CreateUpdateBookDTO("12345", "Test Book", "Fiction", null, DateTime.Now, DateTime.Now.AddDays(14)), false);
 
-      // Настройка mock-а для отсутствующего автора
       _mockRepo.Setup(repo => repo.Author.GetAuthorByIdAsync(authorId, false))
           .ReturnsAsync((Author)null);
 
@@ -47,7 +46,6 @@ namespace ModsenTask_Test.BookTest
       var author = new Author { Id = authorId };
       var bookEntity = new Book { Id = Guid.NewGuid(), Name = "Test Book" };
 
-      // Настройка mock-а для существующего автора
       _mockRepo.Setup(repo => repo.Author.GetAuthorByIdAsync(authorId, false))
           .ReturnsAsync(author);
       _mockRepo.Setup(repo => repo.Book.CreateBook(authorId, It.IsAny<Book>()));

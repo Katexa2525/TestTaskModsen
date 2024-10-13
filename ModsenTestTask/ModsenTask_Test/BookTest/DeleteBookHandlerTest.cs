@@ -1,7 +1,7 @@
 ﻿using Application.Interfaces.Repository;
 using Application.UseCases.Commands;
 using Application.UseCases.Handlers;
-using Domain.Entities.Exceptions;
+using Application.Exceptions;
 using Domain.Entities.Models;
 using Moq;
 
@@ -26,7 +26,6 @@ namespace ModsenTask_Test.BookTest
       var bookId = Guid.NewGuid();
       var command = new DeleteBookCommand(authorId, bookId, false);
 
-      // Настройка mock-а для отсутствующей книги
       _mockRepo.Setup(repo => repo.Book.GetBookByIdAsync(authorId, bookId, false))
           .ReturnsAsync((Book)null);
 
@@ -48,7 +47,6 @@ namespace ModsenTask_Test.BookTest
 
       var command = new DeleteBookCommand(authorId, bookId, false);
 
-      // Настройка mock-а для существующей книги
       _mockRepo.Setup(repo => repo.Book.GetBookByIdAsync(authorId, bookId, false))
           .ReturnsAsync(book);
 

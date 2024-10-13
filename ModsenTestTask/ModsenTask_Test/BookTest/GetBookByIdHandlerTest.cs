@@ -2,7 +2,7 @@
 using Application.UseCases.Handlers;
 using Application.UseCases.Quaries;
 using Domain.Entities.DTO;
-using Domain.Entities.Exceptions;
+using Application.Exceptions;
 using Domain.Entities.Models;
 using Moq;
 
@@ -55,7 +55,7 @@ namespace ModsenTask_Test.BookTest
       var request = new GetBookByIdQuery (authorId, bookId, false);
 
       _mockRepository.Setup(repo => repo.Author.GetAuthorByIdAsync(authorId, false))
-          .ReturnsAsync((Author)null); // Author not found
+          .ReturnsAsync((Author)null);
 
       // Act & Assert
       await Assert.ThrowsAsync<AuthorNotFoundException>(async () =>
@@ -76,10 +76,10 @@ namespace ModsenTask_Test.BookTest
       var author = new Author { Id = authorId };
 
       _mockRepository.Setup(repo => repo.Author.GetAuthorByIdAsync(authorId, false))
-          .ReturnsAsync(author); // Author found
+          .ReturnsAsync(author); 
 
       _mockRepository.Setup(repo => repo.Book.GetBookByIdAsync(authorId, bookId, false))
-          .ReturnsAsync((Book)null); // Book not found
+          .ReturnsAsync((Book)null);
 
       // Act & Assert
       await Assert.ThrowsAsync<BookNotFoundException>(async () =>

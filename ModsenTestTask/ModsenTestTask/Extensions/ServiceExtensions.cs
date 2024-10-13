@@ -3,7 +3,7 @@ using Application.Interfaces.Repository;
 using Application.Interfaces.Services;
 using Application.Services;
 using Domain.Entities.Models;
-using Domain.Entities.Validation;
+using Application.Validation;
 using FluentValidation;
 using Infrastructure;
 using Infrastructure.Logger;

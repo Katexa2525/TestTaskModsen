@@ -23,8 +23,8 @@ namespace ModsenTask_Test.UserBookTest
       // Arrange
       var userBooks = new List<UserBook>
         {
-            new UserBook { /* инициализируйте свойства */ },
-            new UserBook { /* инициализируйте свойства */ },
+            new UserBook {},
+            new UserBook {},
         };
 
       _mockRepo.Setup(repo => repo.UserBook.GetAllUserBooksAsync(false)).ReturnsAsync(userBooks);
@@ -42,7 +42,7 @@ namespace ModsenTask_Test.UserBookTest
     public async Task Handle_ReturnsEmptyList_WhenNoUserBooksExist()
     {
       // Arrange
-      var userBooks = new List<UserBook>(); // Пустой список книг пользователя
+      var userBooks = new List<UserBook>();
       _mockRepo.Setup(repo => repo.UserBook.GetAllUserBooksAsync(false)).ReturnsAsync(userBooks);
 
       // Act

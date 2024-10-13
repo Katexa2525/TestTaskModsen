@@ -1,7 +1,7 @@
 ﻿using Domain.Entities.Models;
 using FluentValidation;
 
-namespace Domain.Entities.Validation
+namespace Application.Validation
 {
     public class BookValidator : AbstractValidator<Book>
     {

@@ -1,7 +1,7 @@
 ﻿using Application.Interfaces.Repository;
 using Application.UseCases.Commands;
 using Application.UseCases.Handlers;
-using Domain.Entities.Exceptions;
+using Application.Exceptions;
 using Domain.Entities.Models;
 using Moq;
 
@@ -30,9 +30,9 @@ namespace ModsenTask_Test.AuthorTest
       var exception = await Assert.ThrowsAsync<AuthorNotFoundException>(() =>
           _handler.Handle(new DeleteAuthorCommand(authorId, false), CancellationToken.None));
 
-      Assert.Equal($"The author with id: {authorId} doesn't exist in the database.", exception.Message); // Убедитесь, что это свойство существует в исключении
+      Assert.Equal($"The author with id: {authorId} doesn't exist in the database.", exception.Message); 
       _mockRepo.Verify(repo => repo.Author.GetAuthorByIdAsync(authorId, false), Times.Once);
-      _mockRepo.Verify(repo => repo.Author.DeleteAuthor(It.IsAny<Author>()), Times.Never); // Проверяем, что метод удаления не был вызван
+      _mockRepo.Verify(repo => repo.Author.DeleteAuthor(It.IsAny<Author>()), Times.Never);
       _mockRepo.Verify(repo => repo.SaveAsync(), Times.Never);
     }
 
@@ -50,8 +50,8 @@ namespace ModsenTask_Test.AuthorTest
 
       // Assert
       _mockRepo.Verify(repo => repo.Author.GetAuthorByIdAsync(authorId, false), Times.Once);
-      _mockRepo.Verify(repo => repo.Author.DeleteAuthor(author), Times.Once); // Проверяем, что метод удаления был вызван
-      _mockRepo.Verify(repo => repo.SaveAsync(), Times.Once); // Проверяем, что SaveAsync был вызван
+      _mockRepo.Verify(repo => repo.Author.DeleteAuthor(author), Times.Once); 
+      _mockRepo.Verify(repo => repo.SaveAsync(), Times.Once); 
     }
   }
 }

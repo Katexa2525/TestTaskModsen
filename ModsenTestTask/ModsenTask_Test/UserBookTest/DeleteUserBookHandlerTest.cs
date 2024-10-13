@@ -1,7 +1,7 @@
 ﻿using Application.Interfaces.Repository;
 using Application.UseCases.Commands;
 using Application.UseCases.Handlers;
-using Domain.Entities.Exceptions;
+using Application.Exceptions;
 using Domain.Entities.Models;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -19,8 +19,6 @@ namespace ModsenTask_Test.UserBookTest
     public DeleteUserBookHandlerTest()
     {
       _mockRepo = new Mock<IRepositoryManager>();
-
-      // Создаем Mock для IUserStore
       _mockUserStore = new Mock<IUserStore<User>>();
       _mockUserManager = new Mock<UserManager<User>>(_mockUserStore.Object, null, null, null, null, null, null, null, null);
 
@@ -34,18 +32,15 @@ namespace ModsenTask_Test.UserBookTest
       var userName = "testUser";
       var userId = Guid.NewGuid().ToString();
       var bookId = Guid.NewGuid();
-      var userBook = new UserBook { Id = bookId, IdUser = userId /* другие свойства */ };
+      var userBook = new UserBook { Id = bookId, IdUser = userId };
 
       var user = new User { Id = userId, UserName = userName };
 
-      // Настройка мока для пользователя
       _mockUserManager.Setup(um => um.FindByNameAsync(userName)).ReturnsAsync(user);
 
-      // Настройка мока для существующей книги
       _mockRepo.Setup(repo => repo.UserBook.GetUserBookByIdAsync(bookId, userId, It.IsAny<bool>()))
           .ReturnsAsync(userBook);
 
-      // Настройка метода удаления
       _mockRepo.Setup(repo => repo.UserBook.DeleteUserBook(userBook));
 
       // Act
@@ -68,10 +63,7 @@ namespace ModsenTask_Test.UserBookTest
 
       var user = new User { Id = userId, UserName = userName };
 
-      // Настройка мока для пользователя
       _mockUserManager.Setup(um => um.FindByNameAsync(userName)).ReturnsAsync(user);
-
-      // Настройка мока для отсутствующей книги
       _mockRepo.Setup(repo => repo.UserBook.GetUserBookByIdAsync(bookId, userId, It.IsAny<bool>()))
           .ReturnsAsync((UserBook)null);
 
@@ -79,7 +71,7 @@ namespace ModsenTask_Test.UserBookTest
       var exception = await Assert.ThrowsAsync<UserBookNotFoundException>(() =>
           _handler.Handle(new DeleteUserBookCommand(bookId, userName, false), CancellationToken.None));
 
-      Assert.Equal($"The userbook with bookid: {bookId} doesn't exist in the database.", exception.Message); // Предполагая, что у UserBookNotFoundException есть свойство IdUserBook
+      Assert.Equal($"The userbook with bookid: {bookId} doesn't exist in the database.", exception.Message);
       _mockRepo.Verify(repo => repo.UserBook.GetUserBookByIdAsync(bookId, userId, false), Times.Once);
       _mockRepo.Verify(repo => repo.UserBook.DeleteUserBook(It.IsAny<UserBook>()), Times.Never);
       _mockRepo.Verify(repo => repo.SaveAsync(), Times.Never);

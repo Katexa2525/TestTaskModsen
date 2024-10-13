@@ -2,7 +2,7 @@
 using Application.UseCases.Commands;
 using Application.UseCases.Handlers;
 using Domain.Entities.DTO;
-using Domain.Entities.Exceptions;
+using Application.Exceptions;
 using Domain.Entities.Models;
 using FluentValidation;
 using FluentValidation.Results;
@@ -50,11 +50,9 @@ namespace ModsenTask_Test.AuthorTest
       var existingAuthor = new Author { Id = authorId, Name = "Old Name", Surname = "Old Surname", BirthdayDate = DateTime.Now.AddYears(-20), Country = "Old Country" };
       var command = new UpdateAuthorCommand(authorId, new UpdateAuthorDTO("New Name", "New Surname", DateTime.Now, "New Country"), false);
 
-      // Настройка mock-а для существующего автора
       _mockRepo.Setup(repo => repo.Author.GetAuthorByIdAsync(authorId, false))
           .ReturnsAsync(existingAuthor);
 
-      // Настройка mock-а для валидатора
       var validatorMock = new Mock<IValidator<Author>>();
       validatorMock.Setup(v => v.Validate(It.IsAny<Author>())).Returns(new ValidationResult());
 
