@@ -27,6 +27,7 @@ try
   builder.Services.AddAuthentication();
   builder.Services.ConfigureIdentity();
   builder.Services.ConfigureJWT(builder.Configuration);
+  builder.Services.ConfigureValidator();
 
  
   builder.Services.AddSingleton<MapsterUserBookConfig>();
@@ -39,10 +40,15 @@ try
   builder.Services.AddEndpointsApiExplorer();
   builder.Services.AddSwaggerGen();
 
+  // этот класс создан согласно последнему условию по обработке ошибок IExceptionHandler
+  //builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+
   var app = builder.Build();
   var _logger = app.Services.GetRequiredService<ILoggerManager>();
-  //app.ConfigureExceptionHandler(_logger);
+
+  // обработчик ошибок с помощью RequstDelegat
   app.UseExceptionHandlerMiddleware();
+
   // Configure the HTTP request pipeline.
   if (app.Environment.IsDevelopment())
   {

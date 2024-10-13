@@ -4,7 +4,7 @@ using Application.Interfaces.Services;
 using Application.Mapping;
 using AutoMapper;
 using Domain.Entities.DTO;
-using Domain.Entities.Exceptions;
+using Application.Exceptions;
 using Domain.Entities.Models;
 using Domain.Entities.Validation;
 using Microsoft.AspNetCore.Identity;

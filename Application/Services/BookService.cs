@@ -5,8 +5,8 @@ using Application.Interfaces;
 using Application.Interfaces.Repository;
 using Application.Interfaces.Services;
 using Domain.Entities.Validation;
-using Domain.Entities.Exceptions;
-using Domain.RequestFeatures;
+using Application.Exceptions;
+using Application.RequestFeatures;
 using Application.Mapping;
 
 namespace Application.Services

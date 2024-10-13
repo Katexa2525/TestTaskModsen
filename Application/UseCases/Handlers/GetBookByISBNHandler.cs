@@ -2,8 +2,8 @@
 using Application.Mapping;
 using Application.UseCases.Quaries;
 using Domain.Entities.DTO;
-using Domain.Entities.Exceptions;
 using Mapster;
+using Application.Exceptions;
 using MediatR;
 using System;
 using System.Collections.Generic;

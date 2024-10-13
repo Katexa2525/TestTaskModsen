@@ -1,4 +1,4 @@
-﻿namespace Domain.RequestFeatures
+﻿namespace Application.RequestFeatures
 {
   public abstract class RequestParameters
   {
