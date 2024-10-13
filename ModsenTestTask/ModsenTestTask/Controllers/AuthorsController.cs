@@ -11,15 +11,9 @@ namespace Presentation.Controllers
   [ApiController]
   public class AuthorsController : ControllerBase
   {
-    //private readonly IServiceManager _service;
 
     private readonly ISender _sender;
     public AuthorsController(ISender sender) => _sender = sender;
-
-    //public AuthorsController(IServiceManager service)
-    //{
-    //  _service = service;
-    //}
 
     [HttpGet]
     public async Task<IActionResult> GetAuthors() 
