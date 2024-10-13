@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Application.UseCases.Handlers
 {
-    internal sealed class GetUserBookByIdHandler : IRequestHandler<GetUserBookByIdQuery, UserBookDTO>
+    public sealed class GetUserBookByIdHandler : IRequestHandler<GetUserBookByIdQuery, UserBookDTO>
     {
         private readonly IRepositoryManager _repository;
         private User? _user;

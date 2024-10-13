@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Application.UseCases.Handlers
 {
-    internal sealed class UpdateAuthorHandler : IRequestHandler<UpdateAuthorCommand, Unit>
+    public sealed class UpdateAuthorHandler : IRequestHandler<UpdateAuthorCommand, Unit>
     {
         private readonly IRepositoryManager _repository;
 

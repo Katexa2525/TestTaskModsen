@@ -3,12 +3,14 @@ using Application.Mapping;
 using Application.Services;
 using Application.UseCases.Commands;
 using Domain.Entities.Exceptions;
+using Domain.Entities.Models;
 using Domain.Entities.Validation;
+using FluentValidation;
 using MediatR;
 
 namespace Application.UseCases.Handlers
 {
-    internal sealed class UpdateBookHandler : IRequestHandler<UpdateBookCommand, Unit>
+    public sealed class UpdateBookHandler : IRequestHandler<UpdateBookCommand, Unit>
     {
         private readonly IRepositoryManager _repository;
         public UpdateBookHandler(IRepositoryManager repository)
