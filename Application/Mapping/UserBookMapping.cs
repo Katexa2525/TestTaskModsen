@@ -25,7 +25,7 @@ namespace Application.Mapping
       return new UserBook
       {
         IdBook = request.IdBook,
-        IdUser = request.UserName,
+        IdUser = request.IdUser,
       };
     }
   }
