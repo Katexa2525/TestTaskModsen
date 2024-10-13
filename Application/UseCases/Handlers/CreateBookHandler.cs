@@ -27,22 +27,22 @@ namespace Application.UseCases.Handlers
         }
         public async Task<BookDTO> Handle(CreateBookCommand request, CancellationToken cancellationToken)
         {
-            var validator = new BookValidator();
+            //var validator = new BookValidator();
             var author = await _repository.Author.GetAuthorByIdAsync(request.authorId, request.trackChanges);
             if (author is null)
                 throw new AuthorNotFoundException(request.authorId);
             Book bookEntity = request.Book.ToBook();
 
             bookEntity.Image = ImageService.LoadImage(request.Book.Image);
-            var validationResult = validator.Validate(bookEntity);
-            if (validationResult.IsValid)
-            {
+            //var validationResult = validator.Validate(bookEntity);
+            //if (validationResult.IsValid)
+            //{
                 _repository.Book.CreateBook(request.authorId, bookEntity);
                 await _repository.SaveAsync();
                 BookDTO bookToReturn = bookEntity.ToBookResponse();
                 return bookToReturn;
-            }
-            return new BookDTO();
+            //}
+            //return new BookDTO();
         }
     }
 }

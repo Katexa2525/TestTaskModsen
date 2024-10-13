@@ -33,16 +33,16 @@ namespace Application.UseCases.Handlers
             if (_user != null)
             {
                 request.createUserBook.UserName = _user.Id;
-                var validator = new UserBookValidation();
+                //var validator = new UserBookValidation();
                 UserBook userBook = request.createUserBook.ToUserBook();
-                var validationResult = validator.Validate(userBook);
-                if (validationResult.IsValid)
-                {
+                //var validationResult = validator.Validate(userBook);
+                //if (validationResult.IsValid)
+                //{
                     _repository.UserBook.PostBookToUserAsync(userBook);
                     await _repository.SaveAsync();
                     UserBookDTO userBookDTO = userBook.ToUserBookResponse();
                     return userBookDTO;
-                }
+                //}
             }
             return new UserBookDTO();
         }

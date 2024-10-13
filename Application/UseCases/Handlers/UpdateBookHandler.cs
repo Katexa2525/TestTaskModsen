@@ -17,7 +17,7 @@ namespace Application.UseCases.Handlers
         }
         public async Task<Unit> Handle(UpdateBookCommand request, CancellationToken cancellationToken)
         {
-            var validator = new BookValidator();
+            //var validator = new BookValidator();
             var author = await _repository.Author.GetAuthorByIdAsync(request.authorId, request.authTrackChanges);
             if (author is null)
                 throw new AuthorNotFoundException(request.authorId);
@@ -25,16 +25,16 @@ namespace Application.UseCases.Handlers
             if (bookEntity is null)
                 throw new BookNotFoundException(request.id);
 
-            var validationResult = validator.Validate(bookEntity);
-            if (validationResult.IsValid)
-            {
+            //var validationResult = validator.Validate(bookEntity);
+            //if (validationResult.IsValid)
+            //{
                 bookEntity = request.bookUpdate.ToBook(bookEntity);
 
                 bookEntity.Image = ImageService.LoadImage(request.bookUpdate.Image);
                 await _repository.SaveAsync();
                 return Unit.Value;
-            }
-            return Unit.Value;
+            //}
+            //return Unit.Value;
         }
     }
 }
