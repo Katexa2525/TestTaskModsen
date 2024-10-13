@@ -22,11 +22,11 @@ namespace Application.UseCases.Handlers
     }
     public async Task<UserBookDTO> Handle(CreateUserBookCommand request, CancellationToken cancellationToken)
     {
-      _user = await _userManager.FindByNameAsync(request.createUserBook.IdUser);
+      _user = await _userManager.FindByNameAsync(request.createUserBook.UserName);
       if (_user != null)
       {
         request.createUserBook.IdUser = _user.Id;
-        UserBook userBook = request.createUserBook.ToUserBook();
+        UserBook userBook = request.createUserBook.Adapt<UserBook>();
         _repository.UserBook.PostBookToUserAsync(userBook);
         await _repository.SaveAsync();
         UserBookDTO userBookDTO = userBook.Adapt<UserBookDTO>();

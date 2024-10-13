@@ -5,7 +5,6 @@ namespace Domain.Entities.Models
 {
   public class Author
     {
-        //[Column("AuthorId")]
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }

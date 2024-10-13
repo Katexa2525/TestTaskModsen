@@ -4,7 +4,6 @@ namespace Domain.Entities.Models
 {
   public class Book
     {
-        //[Column("BookId")]
         public Guid Id { get; set; }
         public string ISBN { get; set; }
         public string Name { get; set; }
@@ -13,10 +12,7 @@ namespace Domain.Entities.Models
         public DateTime TakeTime { get; set; }
         public DateTime ReturnTime { get; set; }
 
-        //[ForeignKey(nameof(Author))]
         public Guid IdAuthor { get; set; }
-        //public Author? Author { get; set; }
-
         public ICollection<UserBook>? UserBooks { get; set; }
     }
 }
