@@ -19,7 +19,7 @@ namespace ModsenTask_Test.BookTest
     }
 
     [Fact]
-    public async Task Handle_ThrowsBookNotFoundException_WhenBookDoesNotExist()
+    public async Task Handle_WhenAuthorExists()
     {
       // Arrange
       var authorId = Guid.NewGuid();
@@ -38,7 +38,7 @@ namespace ModsenTask_Test.BookTest
     }
 
     [Fact]
-    public async Task Handle_DeletesBook_WhenBookExists()
+    public async Task Handle_WhenBookExists()
     {
       // Arrange
       var authorId = Guid.NewGuid();

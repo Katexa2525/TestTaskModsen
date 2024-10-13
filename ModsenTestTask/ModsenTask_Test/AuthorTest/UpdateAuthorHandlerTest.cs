@@ -23,13 +23,11 @@ namespace ModsenTask_Test.AuthorTest
     }
 
     [Fact]
-    public async Task Handle_ThrowsAuthorNotFoundException_WhenAuthorDoesNotExist()
+    public async Task Handle_WhenAuthorExists()
     {
       // Arrange
       var authorId = Guid.NewGuid();
       var command = new UpdateAuthorCommand(authorId, new UpdateAuthorDTO("John", "Doe", DateTime.Now, "USA"), false);
-
-      // Настройка mock-а для отсутствующего автора
       _mockRepo.Setup(repo => repo.Author.GetAuthorByIdAsync(authorId, It.IsAny<bool>()))
           .ReturnsAsync((Author)null);
 
@@ -43,7 +41,7 @@ namespace ModsenTask_Test.AuthorTest
     }
 
     [Fact]
-    public async Task Handle_UpdatesAuthor_WhenValidationSucceeds()
+    public async Task Handle_WhenValidationSucceeds()
     {
       // Arrange
       var authorId = Guid.NewGuid();

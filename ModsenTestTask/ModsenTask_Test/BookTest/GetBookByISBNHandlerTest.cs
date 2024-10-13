@@ -20,7 +20,7 @@ namespace ModsenTask_Test.BookTest
     }
 
     [Fact]
-    public async Task Handle_ReturnsBook_WhenBookExists()
+    public async Task Handle_WhenBookExists()
     {
       // Arrange
       var bookISBN = "123456789";
@@ -42,7 +42,7 @@ namespace ModsenTask_Test.BookTest
     }
 
     [Fact]
-    public async Task Handle_ThrowsBookNotFoundByISBN_WhenBookDoesNotExist()
+    public async Task Handle_WhenBookDoesNotExist()
     {
       // Arrange
       var bookISBN = "987654321";

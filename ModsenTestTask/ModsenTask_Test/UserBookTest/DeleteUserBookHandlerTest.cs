@@ -26,7 +26,7 @@ namespace ModsenTask_Test.UserBookTest
     }
 
     [Fact]
-    public async Task Handle_DeletesUserBook_WhenUserBookExists()
+    public async Task Handle_WhenUserBookExists()
     {
       // Arrange
       var userName = "testUser";
@@ -54,7 +54,7 @@ namespace ModsenTask_Test.UserBookTest
     }
 
     [Fact]
-    public async Task Handle_ThrowsUserBookNotFoundException_WhenUserBookDoesNotExist()
+    public async Task Handle_WhenBookDoesNotExist()
     {
       // Arrange
       var userName = "nonExistingUser";

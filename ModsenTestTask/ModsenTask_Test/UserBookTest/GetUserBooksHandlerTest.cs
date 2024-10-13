@@ -18,7 +18,7 @@ namespace ModsenTask_Test.UserBookTest
     }
 
     [Fact]
-    public async Task Handle_ReturnsUserBooks_WhenUserBooksExist()
+    public async Task Handle_WhenBookDoesNotExist()
     {
       // Arrange
       var userBooks = new List<UserBook>
@@ -39,7 +39,7 @@ namespace ModsenTask_Test.UserBookTest
     }
 
     [Fact]
-    public async Task Handle_ReturnsEmptyList_WhenNoUserBooksExist()
+    public async Task Handle_WhenNoUserBooksExist()
     {
       // Arrange
       var userBooks = new List<UserBook>();
@@ -55,7 +55,7 @@ namespace ModsenTask_Test.UserBookTest
     }
 
     [Fact]
-    public async Task Handle_ThrowsException_WhenRepositoryFails()
+    public async Task Handle_WhenRepositoryFails()
     {
       // Arrange
       _mockRepo.Setup(repo => repo.UserBook.GetAllUserBooksAsync(false))

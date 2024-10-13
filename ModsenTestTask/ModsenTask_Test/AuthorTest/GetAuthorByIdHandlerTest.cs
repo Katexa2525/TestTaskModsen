@@ -19,7 +19,7 @@ namespace ModsenTask_Test.AuthorTest
     }
 
     [Fact]
-    public async Task Handle_ReturnsAuthorDTO_WhenAuthorExists()
+    public async Task Handle_WhenAuthorExists()
     {
       // Arrange
       var authorId = Guid.NewGuid();

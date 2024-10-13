@@ -18,7 +18,7 @@ namespace ModsenTask_Test.AuthorTest
     }
 
     [Fact]
-    public async Task Handle_ReturnsListOfAuthors_WhenAuthorsExist()
+    public async Task Handle_WhenAuthorsExist()
     {
       // Arrange
       var authors = new List<Author>
@@ -40,7 +40,7 @@ namespace ModsenTask_Test.AuthorTest
     }
 
     [Fact]
-    public async Task Handle_ReturnsEmptyList_WhenNoAuthorsExist()
+    public async Task Handle_WhenAuthorExists()
     {
       // Arrange
       _mockRepo.Setup(repo => repo.Author.GetAllAuthorsAsync(It.IsAny<bool>()))

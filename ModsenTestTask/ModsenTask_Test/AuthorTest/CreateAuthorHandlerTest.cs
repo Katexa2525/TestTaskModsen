@@ -19,7 +19,7 @@ namespace ModsenTask_Test.AuthorTest
     }
 
     [Fact]
-    public async Task Handle_CreatesAuthor_WhenValidationSucceeds()
+    public async Task Handle_WhenValidationSucceeds()
     {
       // Arrange
       var newAuthor = new CreateAuthorDTO("John", "Doe", new DateTime(1990, 1, 1), "USA");

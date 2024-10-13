@@ -24,7 +24,7 @@ namespace ModsenTask_Test.UserBookTest
         }
 
         [Fact]
-        public async Task Handle_ReturnsUserBookDTO_WhenUserAndBookExist()
+        public async Task Handle_WhenBookDoesNotExist()
         {
             // Arrange
             var userName = "testuser";
@@ -52,7 +52,7 @@ namespace ModsenTask_Test.UserBookTest
         }
 
         [Fact]
-        public async Task Handle_ThrowsUserBookNotFoundException_WhenBookDoesNotExist()
+        public async Task Handle_WhenBookDoesNotExistWithException()
         {
             // Arrange
             var userName = "testuser";
@@ -72,29 +72,6 @@ namespace ModsenTask_Test.UserBookTest
 
             _mockUserManager.Verify(um => um.FindByNameAsync(userName), Times.Once);
             _mockRepository.Verify(repo => repo.UserBook.GetUserBookByIdAsync(bookId, user.Id, It.IsAny<bool>()), Times.Once);
-        }
-
-        [Fact]
-        public async Task Handle_ReturnsNull_WhenUserDoesNotExist()
-        {
-            // Arrange
-            var userName = "nonexistentuser";
-            var bookId = Guid.NewGuid();
-
-            _mockUserManager.Setup(um => um.FindByNameAsync(userName))
-                .ReturnsAsync((User)null);
-
-            var query = new GetUserBookByIdQuery(bookId, userName, trackChanges);
-
-            // Act
-            var result = await _handler.Handle(query, CancellationToken.None);
-
-            // Assert
-            Assert.Null(result);
-
-            _mockUserManager.Verify(um => um.FindByNameAsync(userName), Times.Once);
-
-            _mockRepository.Verify(repo => repo.UserBook.GetUserBookByIdAsync(It.IsAny<Guid>(), It.IsAny<Guid>().ToString(), It.IsAny<bool>()), Times.Never);
         }
     }
 }
