@@ -24,22 +24,22 @@ namespace Application.UseCases.Handlers
     }
     public async Task<UserBookDTO> Handle(CreateUserBookCommand request, CancellationToken cancellationToken)
     {
-            _user = await _userManager.FindByNameAsync(request.createUserBook.UserName);
-            if (_user != null)
-            {
-                request.createUserBook.UserName = _user.Id;
-                //var validator = new UserBookValidation();
-                UserBook userBook = request.createUserBook.ToUserBook();
-                //var validationResult = validator.Validate(userBook);
-                //if (validationResult.IsValid)
-                //{
-                    _repository.UserBook.PostBookToUserAsync(userBook);
-                    await _repository.SaveAsync();
-                    UserBookDTO userBookDTO = userBook.Adapt<UserBookDTO>();
-                    return userBookDTO;
-                //}
-            }
-            return new UserBookDTO();
-        }
+      _user = await _userManager.FindByNameAsync(request.createUserBook.IdUser);
+      if (_user != null)
+      {
+        request.createUserBook.IdUser = _user.Id;
+        //var validator = new UserBookValidation();
+        UserBook userBook = request.createUserBook.ToUserBook();
+        //var validationResult = validator.Validate(userBook);
+        //if (validationResult.IsValid)
+        //{
+        _repository.UserBook.PostBookToUserAsync(userBook);
+        await _repository.SaveAsync();
+        UserBookDTO userBookDTO = userBook.Adapt<UserBookDTO>();
+        return userBookDTO;
+        //}
       }
+      return new UserBookDTO();
     }
+  }
+}
